@@ -5,6 +5,7 @@
 package Negocio.Servicios;
 
 import Data.DAO.PersonaDAO;
+import Data.Modelos.PersonaModel;
 import Negocio.DTOS.PersonaDTO;
 import java.sql.SQLException;
 
@@ -14,12 +15,22 @@ import java.sql.SQLException;
  */
 public class PersonaServicio {
 
-    public static boolean getPersonaByUserId(int pUserId) {
+    public static PersonaDTO getPersonaByUserId(int pUserId) {
         try {
-            return PersonaDAO.getPersonaByUserId(pUserId);
+            PersonaModel xPersonaBD = PersonaDAO.getPersonaByUserId(pUserId);
+            if(xPersonaBD != null)
+            {
+                //Pasar hash a contraseña
+                String passwd ="";//Deshasheo 
+                PersonaDTO xPersona = new PersonaDTO(xPersonaBD.UserId,xPersonaBD.Nombre,
+                        xPersonaBD.Apellido,xPersonaBD.Direccion,xPersonaBD.Ciudad,
+                        xPersonaBD.Departamento, passwd);
+            return xPersona;
+            }
         } catch (SQLException e) {
             throw new Error("Problem", e);
         }
+        return null;
     }
     
     public static void createPersona(PersonaDTO pPersona){

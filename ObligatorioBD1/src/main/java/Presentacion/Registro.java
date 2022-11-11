@@ -197,7 +197,8 @@ public class Registro extends javax.swing.JFrame {
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         int userId = Integer.parseInt(txtUserId.getText());
-        if (PersonaServicio.getPersonaByUserId(userId)) {
+        PersonaDTO xPerson =PersonaServicio.getPersonaByUserId(userId);
+        if (xPerson != null) {
             if (chequeoContraseñas()) {
                 PersonaDTO xPersona = new PersonaDTO(userId,
                         txtNombre.getText(), txtApellido.getText(), txtDireccion.getText(),
