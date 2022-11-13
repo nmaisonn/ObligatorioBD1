@@ -53,6 +53,11 @@ public class Registro extends javax.swing.JFrame {
         txtUserId = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jLabel1.setText("Creacion de Usuario");
 
@@ -207,6 +212,7 @@ public class Registro extends javax.swing.JFrame {
                         txtCiudad.getText(), txtDepartamento.getText(), txtContraseña.getText());
                 try {
                     PersonaServicio.createPersona(xPersona);
+                    //cargar tabla preguntas
                     JOptionPane.showMessageDialog(null, "Se agrego la persona correctamente");
                 } catch (SQLException e) {
                     JOptionPane.showMessageDialog(null, "Hubo un error al agregar a la persona");
@@ -217,6 +223,20 @@ public class Registro extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Ya existe una persona con esa CI");
         }
     }//GEN-LAST:event_btnCrearActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+       txtUserId.setText("");
+       txtNombre.setText("");
+       txtApellido.setText("");
+       txtCiudad.setText("");
+       txtContraseña.setText("");
+       txtContraseña2.setText("");
+       txtDepartamento.setText("");
+       txtDireccion.setText("");
+       txtPreguntaSeguridad.setText("");
+       //cargar combo box
+
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments

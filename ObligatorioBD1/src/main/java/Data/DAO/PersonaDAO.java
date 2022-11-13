@@ -9,6 +9,7 @@ import Negocio.DTOS.PersonaDTO;
 import Recursos.Conexion;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -35,16 +36,20 @@ public class PersonaDAO {
         return xPersona;
     }
 
-    public static void createPersona(PersonaDTO pPersona) throws SQLException {        
-        String sql = "insert into Personas(user_id,nombre,apellido,direccion,ciudad,departamento,hashpwd)"
-                + " Values (" + pPersona.UserId + ",'" + pPersona.Nombre + "','" + pPersona.Apellido
-                + "','" + pPersona.Direccion + "','" + pPersona.Ciudad + "','" + pPersona.Departamento + "','"
-                + pPersona.Password + "')";
+    public static void createPersona(PersonaDTO pPersona) throws SQLException {
+        String sql = "insert into Personas (user_id,nombre,apellido,direccion,ciudad,departamento,hashpwd)"
+                + " Values (?,?,?,?,?,?,?)";
         Conexion xConexion = Conexion.GetInstance();
-        Statement stmt = xConexion.conn.createStatement();
+        PreparedStatement stmt = xConexion.conn.prepareStatement(sql);
         try {
-            stmt.executeQuery(sql);
-            
+            stmt.setInt(1, pPersona.UserId);
+            stmt.setString(2, pPersona.Nombre);
+            stmt.setString(3, pPersona.Apellido);
+            stmt.setString(4, pPersona.Direccion);
+            stmt.setString(5, pPersona.Ciudad);
+            stmt.setString(6, pPersona.Departamento);
+            stmt.setString(7, pPersona.Password);
+            int cont = stmt.executeUpdate();
         } catch (SQLException e) {
             throw new Error("Problem", e);
         }
