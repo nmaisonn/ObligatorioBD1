@@ -7,7 +7,9 @@ package Negocio.Servicios;
 import Data.DAO.PersonaDAO;
 import Data.Modelos.PersonaModel;
 import Negocio.DTOS.PersonaDTO;
+import Presentacion.Registro;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -33,7 +35,7 @@ public class PersonaServicio {
         return null;
     }
     
-    public static void createPersona(PersonaDTO pPersona){
+    public static void createPersona(PersonaDTO pPersona)throws SQLException{
         try {
             PersonaDAO.createPersona(pPersona);
         } catch (SQLException e) {

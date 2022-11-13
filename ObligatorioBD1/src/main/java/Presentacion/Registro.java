@@ -6,6 +6,8 @@ package Presentacion;
 
 import Negocio.DTOS.PersonaDTO;
 import Negocio.Servicios.PersonaServicio;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -197,20 +199,28 @@ public class Registro extends javax.swing.JFrame {
 
     private void btnCrearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearActionPerformed
         int userId = Integer.parseInt(txtUserId.getText());
-        PersonaDTO xPerson =PersonaServicio.getPersonaByUserId(userId);
-        if (xPerson != null) {
+        PersonaDTO xPerson = PersonaServicio.getPersonaByUserId(userId);
+        if (xPerson == null) {
             if (chequeoContraseñas()) {
                 PersonaDTO xPersona = new PersonaDTO(userId,
                         txtNombre.getText(), txtApellido.getText(), txtDireccion.getText(),
                         txtCiudad.getText(), txtDepartamento.getText(), txtContraseña.getText());
-                PersonaServicio.createPersona(xPersona);
+                try {
+                    PersonaServicio.createPersona(xPersona);
+                    JOptionPane.showMessageDialog(null, "Se agrego la persona correctamente");
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Hubo un error al agregar a la persona");
+                    throw new Error("Problem", e);
+                }
             }
+        } else {
+            JOptionPane.showMessageDialog(null, "Ya existe una persona con esa CI");
         }
     }//GEN-LAST:event_btnCrearActionPerformed
 
     /**
-         * @param args the command line arguments
-         */
+     * @param args the command line arguments
+     */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

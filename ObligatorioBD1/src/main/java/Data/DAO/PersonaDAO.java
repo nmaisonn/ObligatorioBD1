@@ -22,33 +22,29 @@ public class PersonaDAO {
     public static PersonaModel getPersonaByUserId(int pUserId) throws SQLException {
         PersonaModel xPersona = null;
         String sql = "select * from Personas where user_id =" + pUserId;
-        //Conexion xConexion = Conexion.GetInstance();
-        //Statement stmt = xConexion.conn.createStatement();
-        Connection conn = DriverManager.getConnection("jdbc:sqlserver://srv-obligatorio.database.windows.net:1433;database=ObligatorioBD1;user=FPMUser@srv-obligatorio;password=FPMUsuarioBD1;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
-        Statement stmt = conn.createStatement();
+        Conexion xConexion = Conexion.GetInstance();
+        Statement stmt = xConexion.conn.createStatement();
         try {
             ResultSet rs = stmt.executeQuery(sql);
-            if (!rs.wasNull()) {
+            while (rs.next()) {
                 xPersona = new PersonaModel(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
             }
         } catch (SQLException e) {
             throw new Error("Problem", e);
         }
         return xPersona;
-
     }
 
-    public static void createPersona(PersonaDTO pPersona) throws SQLException {
+    public static void createPersona(PersonaDTO pPersona) throws SQLException {        
         String sql = "insert into Personas(user_id,nombre,apellido,direccion,ciudad,departamento,hashpwd)"
-                + " Values (" + pPersona.UserId + "," + pPersona.Nombre + "," + pPersona.Apellido
-                + "," + pPersona.Direccion + "," + pPersona.Ciudad + "," + pPersona.Departamento + ","
-                + pPersona.Password + ")";
+                + " Values (" + pPersona.UserId + ",'" + pPersona.Nombre + "','" + pPersona.Apellido
+                + "','" + pPersona.Direccion + "','" + pPersona.Ciudad + "','" + pPersona.Departamento + "','"
+                + pPersona.Password + "')";
         Conexion xConexion = Conexion.GetInstance();
-
         Statement stmt = xConexion.conn.createStatement();
-
         try {
-            ResultSet rs = stmt.executeQuery(sql);
+            stmt.executeQuery(sql);
+            
         } catch (SQLException e) {
             throw new Error("Problem", e);
         }
