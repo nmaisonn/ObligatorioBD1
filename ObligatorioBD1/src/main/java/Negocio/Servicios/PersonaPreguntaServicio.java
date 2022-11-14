@@ -5,6 +5,7 @@
 package Negocio.Servicios;
 
 import Data.DAO.PersonaPreguntaDAO;
+import Data.Modelos.PersonaPreguntaModel;
 import Negocio.DTOS.PersonaPreguntaDTO;
 import java.sql.SQLException;
 
@@ -13,13 +14,14 @@ import java.sql.SQLException;
  * @author nmais
  */
 public class PersonaPreguntaServicio {
-   /* public static void crearPersonaPregunta(PersonaPreguntaDTO pPersonaPregunta)throws SQLException{
+    
+   public static void crearPersonaPregunta(PersonaPreguntaDTO pPersonaPregunta)throws SQLException{
         try {
-            PersonaPreguntaDAO.crearPersonaPregunta(PersonaPreguntaDTO);
+            PersonaPreguntaModel  xPersPreg = new PersonaPreguntaModel(pPersonaPregunta.UserId,pPersonaPregunta.PregId, pPersonaPregunta.Respuesta);
+            PersonaPreguntaDAO.crearPersonaPregunta(xPersPreg);
         } catch (SQLException e) {
             throw new Error("Problem", e);
         }
     
     }
-*/
 }
