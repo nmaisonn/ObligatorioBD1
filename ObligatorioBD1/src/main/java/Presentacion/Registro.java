@@ -42,7 +42,7 @@ public class Registro extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbPreguntas = new javax.swing.JComboBox<>();
         btnCrear = new javax.swing.JButton();
         txtPreguntaSeguridad = new javax.swing.JTextField();
         txtContraseña = new javax.swing.JTextField();
@@ -77,7 +77,7 @@ public class Registro extends javax.swing.JFrame {
 
         jLabel7.setText("Contraseña:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbPreguntas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnCrear.setText("Crear");
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -149,7 +149,7 @@ public class Registro extends javax.swing.JFrame {
                             .addComponent(txtDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cmbPreguntas, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(230, 230, 230)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -191,7 +191,7 @@ public class Registro extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(txtContraseña2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(47, 47, 47)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbPreguntas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -216,7 +216,7 @@ public class Registro extends javax.swing.JFrame {
                         txtCiudad.getText(), txtDepartamento.getText(), txtContraseña.getText());
                 try {
                     PersonaServicio.createPersona(xPersona);
-                    String textoComboBox = "";
+                    String textoComboBox =(String)cmbPreguntas.getSelectedItem();
                     PreguntaDTO preg = PreguntaServicio.getPreguntaByPregunta(textoComboBox);
                     PersonaPreguntaDTO xPersPreg = new PersonaPreguntaDTO(userId,preg.PregId,txtPreguntaSeguridad.getText());
                     PersonaPreguntaServicio.crearPersonaPregunta(xPersPreg);
@@ -241,7 +241,10 @@ public class Registro extends javax.swing.JFrame {
        txtDepartamento.setText("");
        txtDireccion.setText("");
        txtPreguntaSeguridad.setText("");
-       //cargar combo box
+       PreguntaDTO[] preguntas = PreguntaServicio.getPreguntas();
+       for(PreguntaDTO x: preguntas){
+           cmbPreguntas.addItem(x.Pregunta);
+       }
 
     }//GEN-LAST:event_formWindowOpened
 
@@ -288,7 +291,7 @@ public class Registro extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrear;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cmbPreguntas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
