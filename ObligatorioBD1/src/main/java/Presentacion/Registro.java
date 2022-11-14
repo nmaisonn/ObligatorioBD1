@@ -5,6 +5,8 @@
 package Presentacion;
 
 import Negocio.DTOS.PersonaDTO;
+import Negocio.DTOS.PersonaPreguntaDTO;
+import Negocio.Servicios.PersonaPreguntaServicio;
 import Negocio.Servicios.PersonaServicio;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -212,7 +214,9 @@ public class Registro extends javax.swing.JFrame {
                         txtCiudad.getText(), txtDepartamento.getText(), txtContraseña.getText());
                 try {
                     PersonaServicio.createPersona(xPersona);
-                    //cargar tabla preguntas
+                    //int pregId = PreguntaServicio.getPreguntaByPregunta("textodelTextbox");
+                    PersonaPreguntaDTO xPersPreg = new PersonaPreguntaDTO(userId,2,txtPreguntaSeguridad.getText());
+                    //PersonaPreguntaServicio.crearPersonaPregunta(xPersPreg);
                     JOptionPane.showMessageDialog(null, "Se agrego la persona correctamente");
                 } catch (SQLException e) {
                     JOptionPane.showMessageDialog(null, "Hubo un error al agregar a la persona");

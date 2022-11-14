@@ -37,7 +37,9 @@ public class PersonaServicio {
     
     public static void createPersona(PersonaDTO pPersona)throws SQLException{
         try {
-            PersonaDAO.createPersona(pPersona);
+            String hashpwd = pPersona.Password; //Falta hacer el hash
+            PersonaModel xPersona = new PersonaModel(pPersona.UserId,pPersona.Nombre,pPersona.Apellido,pPersona.Direccion,pPersona.Ciudad,pPersona.Departamento,hashpwd);
+            PersonaDAO.createPersona(xPersona);
         } catch (SQLException e) {
             throw new Error("Problem", e);
         }

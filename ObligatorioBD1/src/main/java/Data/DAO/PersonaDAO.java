@@ -36,7 +36,7 @@ public class PersonaDAO {
         return xPersona;
     }
 
-    public static void createPersona(PersonaDTO pPersona) throws SQLException {
+    public static void createPersona(PersonaModel pPersona) throws SQLException {
         String sql = "insert into Personas (user_id,nombre,apellido,direccion,ciudad,departamento,hashpwd)"
                 + " Values (?,?,?,?,?,?,?)";
         Conexion xConexion = Conexion.GetInstance();
@@ -48,7 +48,7 @@ public class PersonaDAO {
             stmt.setString(4, pPersona.Direccion);
             stmt.setString(5, pPersona.Ciudad);
             stmt.setString(6, pPersona.Departamento);
-            stmt.setString(7, pPersona.Password);
+            stmt.setString(7, pPersona.Hashpwd);
             int cont = stmt.executeUpdate();
         } catch (SQLException e) {
             throw new Error("Problem", e);

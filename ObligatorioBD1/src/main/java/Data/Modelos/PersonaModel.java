@@ -16,7 +16,7 @@ public class PersonaModel {
     public String Direccion;
     public String Ciudad;
     public String Departamento;
-    public String Password;
+    public String Hashpwd;
     
     public PersonaModel(int pUserId, String pNombre, String pApellido, String pDireccion, String pCiudad, String pDepartamento, String pPassword){
     this.UserId = pUserId;
@@ -25,7 +25,7 @@ public class PersonaModel {
     this.Direccion = pDireccion;
     this.Ciudad = pCiudad;
     this.Departamento = pDepartamento;
-    this.Password = pPassword;
+    this.Hashpwd = pPassword;
     }
     
     
