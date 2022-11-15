@@ -26,7 +26,7 @@ public class PersonaServicio {
                 String passwd ="";//Deshasheo 
                 PersonaDTO xPersona = new PersonaDTO(xPersonaBD.UserId,xPersonaBD.Nombre,
                         xPersonaBD.Apellido,xPersonaBD.Direccion,xPersonaBD.Ciudad,
-                        xPersonaBD.Departamento, passwd);
+                        xPersonaBD.Departamento, xPersonaBD.Hashpwd);
             return xPersona;
             }
         } catch (SQLException e) {
