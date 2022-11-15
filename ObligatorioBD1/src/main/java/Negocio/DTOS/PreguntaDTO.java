@@ -9,8 +9,8 @@ package Negocio.DTOS;
  * @author nmais
  */
 public class PreguntaDTO {
-    int PregId;
-    String Pregunta;
+    public int PregId;
+    public String Pregunta;
     
     public PreguntaDTO(int pPregId, String pPregunta){
         this.PregId = pPregId;

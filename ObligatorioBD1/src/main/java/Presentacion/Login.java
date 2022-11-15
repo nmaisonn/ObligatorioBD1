@@ -5,7 +5,11 @@
 package Presentacion;
 
 import Negocio.DTOS.PersonaDTO;
+import Negocio.DTOS.PersonaPreguntaDTO;
+import Negocio.DTOS.PreguntaDTO;
+import Negocio.Servicios.PersonaPreguntaServicio;
 import Negocio.Servicios.PersonaServicio;
+import Negocio.Servicios.PreguntaServicio;
 import java.awt.Dimension;
 import javax.swing.JOptionPane;
 
@@ -292,8 +296,12 @@ public class Login extends javax.swing.JFrame {
         PersonaDTO xPersona = PersonaServicio.getPersonaByUserId(Integer.parseInt(ciUser.getText()));
         if (xPersona != null) {
             try {
-                // Buscar pregunta y mostrarla
+                PersonaPreguntaDTO persPreg = PersonaPreguntaServicio.getPersPregByUserId(xPersona.UserId);
 
+                PreguntaDTO preg = PreguntaServicio.getPregById(persPreg.PregId);
+
+                // Buscar pregunta y mostrarla
+                preguntaUser.setText(preg.Pregunta);
                 // Mostrar cosas
                 ventanaRecuperar1.setVisible(false);
                 ventanaRecuperar2.setMinimumSize(new Dimension(500, 359));
@@ -310,8 +318,20 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
+        PersonaDTO xPersona = PersonaServicio.getPersonaByUserId(Integer.parseInt(ciUser.getText()));
+        PersonaPreguntaDTO persPreg = PersonaPreguntaServicio.getPersPregByUserId(xPersona.UserId);
+
+        if (persPreg.Respuesta.equals(respuestaUser.getText())) {
+            ventanaRecuperar2.setVisible(false);
+            ventanaRecuperar3.setMinimumSize(new Dimension(500, 359));
+            ventanaRecuperar3.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al recuperar la contraseña!");
+            respuestaUser.setText("");
+            ventanaRecuperar2.setVisible(false);
+        }
         // si el txt = respuesta le muestro la ventana de cambiar pass
-        ventanaRecuperar3.setVisible(true);
+
         // sino error
     }//GEN-LAST:event_jButton2MouseClicked
 

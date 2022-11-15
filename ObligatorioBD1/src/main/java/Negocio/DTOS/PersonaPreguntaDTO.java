@@ -9,9 +9,9 @@ package Negocio.DTOS;
  * @author nmais
  */
 public class PersonaPreguntaDTO {
-    int UserId;
-    int PregId;
-    String Respuesta;
+    public int UserId;
+    public int PregId;
+    public String Respuesta;
     
     public PersonaPreguntaDTO(int pUserId,int pPregId, String pRespuesta){
         this.UserId = pUserId;

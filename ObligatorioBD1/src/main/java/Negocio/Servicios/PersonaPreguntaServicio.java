@@ -4,7 +4,11 @@
  */
 package Negocio.Servicios;
 
+import Data.DAO.PersonaDAO;
 import Data.DAO.PersonaPreguntaDAO;
+import Data.Modelos.PersonaModel;
+import Data.Modelos.PersonaPreguntaModel;
+import Negocio.DTOS.PersonaDTO;
 import Negocio.DTOS.PersonaPreguntaDTO;
 import java.sql.SQLException;
 
@@ -13,7 +17,20 @@ import java.sql.SQLException;
  * @author nmais
  */
 public class PersonaPreguntaServicio {
-   /* public static void crearPersonaPregunta(PersonaPreguntaDTO pPersonaPregunta)throws SQLException{
+
+    public static PersonaPreguntaDTO getPersPregByUserId(int userId) {
+        try {
+            PersonaPreguntaModel persPregBD = PersonaPreguntaDAO.getPersPregByUserId(userId);
+            if (persPregBD != null) {
+                PersonaPreguntaDTO persPreg = new PersonaPreguntaDTO(persPregBD.UserId, persPregBD.PregId, persPregBD.Respuesta);
+                return persPreg;
+            }
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        }
+        return null;
+    }
+    /* public static void crearPersonaPregunta(PersonaPreguntaDTO pPersonaPregunta)throws SQLException{
         try {
             PersonaPreguntaDAO.crearPersonaPregunta(PersonaPreguntaDTO);
         } catch (SQLException e) {
@@ -21,5 +38,5 @@ public class PersonaPreguntaServicio {
         }
     
     }
-*/
+     */
 }
