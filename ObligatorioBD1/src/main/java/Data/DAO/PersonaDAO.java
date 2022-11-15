@@ -22,11 +22,12 @@ public class PersonaDAO {
 
     public static PersonaModel getPersonaByUserId(int pUserId) throws SQLException {
         PersonaModel xPersona = null;
-        String sql = "select * from Personas where user_id =" + pUserId;
+        String sql = "select * from Personas where user_id = ?";
         Conexion xConexion = Conexion.GetInstance();
-        Statement stmt = xConexion.conn.createStatement();
+        PreparedStatement stmt = xConexion.conn.prepareStatement(sql);
         try {
-            ResultSet rs = stmt.executeQuery(sql);
+            stmt.setInt(1, pUserId);
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 xPersona = new PersonaModel(Integer.parseInt(rs.getString(1)), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7));
             }

@@ -77,8 +77,6 @@ public class Registro extends javax.swing.JFrame {
 
         jLabel7.setText("Contraseña:");
 
-        cmbPreguntas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         btnCrear.setText("Crear");
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -229,18 +227,11 @@ public class Registro extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Ya existe una persona con esa CI");
         }
+        vaciarCampos();
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-       txtUserId.setText("");
-       txtNombre.setText("");
-       txtApellido.setText("");
-       txtCiudad.setText("");
-       txtContraseña.setText("");
-       txtContraseña2.setText("");
-       txtDepartamento.setText("");
-       txtDireccion.setText("");
-       txtPreguntaSeguridad.setText("");
+       vaciarCampos();
        PreguntaDTO[] preguntas = PreguntaServicio.getPreguntas();
        for(PreguntaDTO x: preguntas){
            cmbPreguntas.addItem(x.Pregunta);
@@ -287,6 +278,18 @@ public class Registro extends javax.swing.JFrame {
         String pass1 = txtContraseña.getText();
         String pass2 = txtContraseña2.getText();
         return pass1.equals(pass2);
+    }
+    
+    private void vaciarCampos(){
+       txtUserId.setText("");
+       txtNombre.setText("");
+       txtApellido.setText("");
+       txtCiudad.setText("");
+       txtContraseña.setText("");
+       txtContraseña2.setText("");
+       txtDepartamento.setText("");
+       txtDireccion.setText("");
+       txtPreguntaSeguridad.setText("");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
