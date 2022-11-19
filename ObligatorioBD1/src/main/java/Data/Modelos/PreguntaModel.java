@@ -12,8 +12,6 @@ public class PreguntaModel {
     public int PregId;
     public String Pregunta;
 
-    public int PregId;
-    public String Pregunta;
 
     public PreguntaModel(int pPregId, String pPregunta) {
         this.PregId = pPregId;

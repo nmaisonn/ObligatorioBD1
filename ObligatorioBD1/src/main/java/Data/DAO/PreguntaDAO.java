@@ -59,4 +59,20 @@ public class PreguntaDAO {
         }
         return xRetorno;
     }
+    
+     public static PreguntaModel getPreguntaById(int pregId) throws SQLException {
+        PreguntaModel preg = null;
+        String sql = "select * from Preguntas where preg_id =" + pregId;
+        Conexion xConexion = Conexion.GetInstance();
+        Statement stmt = xConexion.conn.createStatement();
+        try {
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                preg = new PreguntaModel(Integer.parseInt(rs.getString(1)), rs.getString(2));
+            }
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        }
+        return preg;
+    }
 }

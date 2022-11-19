@@ -7,10 +7,8 @@ package Negocio.Servicios;
 import Data.DAO.PersonaDAO;
 import Data.Modelos.PersonaModel;
 import Negocio.DTOS.PersonaDTO;
-import Presentacion.Registro;
 import Recursos.Hashing;
 import java.sql.SQLException;
-import javax.swing.JOptionPane;
 
 /**
  *

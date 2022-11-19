@@ -5,15 +5,10 @@
 package Data.DAO;
 
 import Data.Modelos.PersonaModel;
-import Negocio.DTOS.PersonaDTO;
 import Recursos.Conexion;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-
 /**
  *
  * @author nmais

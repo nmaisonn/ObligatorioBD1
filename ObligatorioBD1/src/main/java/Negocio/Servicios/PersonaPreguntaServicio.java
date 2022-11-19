@@ -17,8 +17,17 @@ import java.sql.SQLException;
  * @author nmais
  */
 public class PersonaPreguntaServicio {
-    
-   public static void crearPersonaPregunta(PersonaPreguntaDTO pPersonaPregunta)throws SQLException{
+
+    public static PersonaPreguntaDTO crearPersonaPregunta(PersonaPreguntaDTO pPersonaPregunta) throws SQLException {
+        PersonaPreguntaModel persPregBD = PersonaPreguntaDAO.getPersPregByUserId(pPersonaPregunta.UserId);
+        if (persPregBD != null) {
+            PersonaPreguntaDTO persPreg = new PersonaPreguntaDTO(persPregBD.UserId, persPregBD.PregId, persPregBD.Respuesta);
+            return persPreg;
+        }
+        return null;
+    }
+
+    public static PersonaPreguntaDTO getPersPregByUserId(int userId) {
         try {
             PersonaPreguntaModel persPregBD = PersonaPreguntaDAO.getPersPregByUserId(userId);
             if (persPregBD != null) {
@@ -29,14 +38,5 @@ public class PersonaPreguntaServicio {
             throw new Error("Problem", e);
         }
         return null;
-    }
-    /* public static void crearPersonaPregunta(PersonaPreguntaDTO pPersonaPregunta)throws SQLException{
-        try {
-            PersonaPreguntaModel  xPersPreg = new PersonaPreguntaModel(pPersonaPregunta.UserId,pPersonaPregunta.PregId, pPersonaPregunta.Respuesta);
-            PersonaPreguntaDAO.crearPersonaPregunta(xPersPreg);
-        } catch (SQLException e) {
-            throw new Error("Problem", e);
-        }
-    
     }
 }
