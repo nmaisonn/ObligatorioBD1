@@ -6,8 +6,10 @@ package Presentacion;
 
 import Negocio.DTOS.PersonaDTO;
 import Negocio.DTOS.PersonaPreguntaDTO;
+import Negocio.DTOS.PreguntaDTO;
 import Negocio.Servicios.PersonaPreguntaServicio;
 import Negocio.Servicios.PersonaServicio;
+import Negocio.Servicios.PreguntaServicio;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -40,7 +42,7 @@ public class Registro extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        cmbPreguntas = new javax.swing.JComboBox<>();
         btnCrear = new javax.swing.JButton();
         txtPreguntaSeguridad = new javax.swing.JTextField();
         txtContraseña = new javax.swing.JTextField();
@@ -74,8 +76,6 @@ public class Registro extends javax.swing.JFrame {
         jLabel6.setText("Departamento:");
 
         jLabel7.setText("Contraseña:");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnCrear.setText("Crear");
         btnCrear.addActionListener(new java.awt.event.ActionListener() {
@@ -147,7 +147,7 @@ public class Registro extends javax.swing.JFrame {
                             .addComponent(txtDepartamento, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(cmbPreguntas, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(230, 230, 230)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -189,7 +189,7 @@ public class Registro extends javax.swing.JFrame {
                     .addComponent(jLabel8)
                     .addComponent(txtContraseña2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(47, 47, 47)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(cmbPreguntas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnCrear, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -214,9 +214,10 @@ public class Registro extends javax.swing.JFrame {
                         txtCiudad.getText(), txtDepartamento.getText(), txtContraseña.getText());
                 try {
                     PersonaServicio.createPersona(xPersona);
-                    //int pregId = PreguntaServicio.getPreguntaByPregunta("textodelTextbox");
-                    PersonaPreguntaDTO xPersPreg = new PersonaPreguntaDTO(userId,2,txtPreguntaSeguridad.getText());
-                    //PersonaPreguntaServicio.crearPersonaPregunta(xPersPreg);
+                    String textoComboBox =(String)cmbPreguntas.getSelectedItem();
+                    PreguntaDTO preg = PreguntaServicio.getPreguntaByPregunta(textoComboBox);
+                    PersonaPreguntaDTO xPersPreg = new PersonaPreguntaDTO(userId,preg.PregId,txtPreguntaSeguridad.getText());
+                    PersonaPreguntaServicio.crearPersonaPregunta(xPersPreg);
                     JOptionPane.showMessageDialog(null, "Se agrego la persona correctamente");
                 } catch (SQLException e) {
                     JOptionPane.showMessageDialog(null, "Hubo un error al agregar a la persona");
@@ -226,19 +227,15 @@ public class Registro extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(null, "Ya existe una persona con esa CI");
         }
+        vaciarCampos();
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-       txtUserId.setText("");
-       txtNombre.setText("");
-       txtApellido.setText("");
-       txtCiudad.setText("");
-       txtContraseña.setText("");
-       txtContraseña2.setText("");
-       txtDepartamento.setText("");
-       txtDireccion.setText("");
-       txtPreguntaSeguridad.setText("");
-       //cargar combo box
+       vaciarCampos();
+       PreguntaDTO[] preguntas = PreguntaServicio.getPreguntas();
+       for(PreguntaDTO x: preguntas){
+           cmbPreguntas.addItem(x.Pregunta);
+       }
 
     }//GEN-LAST:event_formWindowOpened
 
@@ -282,10 +279,22 @@ public class Registro extends javax.swing.JFrame {
         String pass2 = txtContraseña2.getText();
         return pass1.equals(pass2);
     }
+    
+    private void vaciarCampos(){
+       txtUserId.setText("");
+       txtNombre.setText("");
+       txtApellido.setText("");
+       txtCiudad.setText("");
+       txtContraseña.setText("");
+       txtContraseña2.setText("");
+       txtDepartamento.setText("");
+       txtDireccion.setText("");
+       txtPreguntaSeguridad.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrear;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> cmbPreguntas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

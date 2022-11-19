@@ -9,6 +9,8 @@ package Data.Modelos;
  * @author nmais
  */
 public class PreguntaModel {
+    public int PregId;
+    public String Pregunta;
 
     public int PregId;
     public String Pregunta;

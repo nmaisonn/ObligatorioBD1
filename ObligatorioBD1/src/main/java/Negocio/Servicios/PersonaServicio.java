@@ -8,6 +8,7 @@ import Data.DAO.PersonaDAO;
 import Data.Modelos.PersonaModel;
 import Negocio.DTOS.PersonaDTO;
 import Presentacion.Registro;
+import Recursos.Hashing;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
@@ -22,8 +23,7 @@ public class PersonaServicio {
             PersonaModel xPersonaBD = PersonaDAO.getPersonaByUserId(pUserId);
             if(xPersonaBD != null)
             {
-                //Pasar hash a contraseña
-                String passwd ="";//Deshasheo 
+                String passwd = xPersonaBD.Hashpwd; //Falta deshasheo 
                 PersonaDTO xPersona = new PersonaDTO(xPersonaBD.UserId,xPersonaBD.Nombre,
                         xPersonaBD.Apellido,xPersonaBD.Direccion,xPersonaBD.Ciudad,
                         xPersonaBD.Departamento, xPersonaBD.Hashpwd);
@@ -37,12 +37,11 @@ public class PersonaServicio {
     
     public static void createPersona(PersonaDTO pPersona)throws SQLException{
         try {
-            String hashpwd = pPersona.Password; //Falta hacer el hash
+            String hashpwd = Hashing.DoHash(pPersona.Password);
             PersonaModel xPersona = new PersonaModel(pPersona.UserId,pPersona.Nombre,pPersona.Apellido,pPersona.Direccion,pPersona.Ciudad,pPersona.Departamento,hashpwd);
             PersonaDAO.createPersona(xPersona);
         } catch (SQLException e) {
             throw new Error("Problem", e);
         }
-    
     }
 }
