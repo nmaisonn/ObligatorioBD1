@@ -4,11 +4,8 @@
  */
 package Negocio.Servicios;
 
-import Data.DAO.PersonaDAO;
 import Data.DAO.PersonaPreguntaDAO;
-import Data.Modelos.PersonaModel;
 import Data.Modelos.PersonaPreguntaModel;
-import Negocio.DTOS.PersonaDTO;
 import Negocio.DTOS.PersonaPreguntaDTO;
 import java.sql.SQLException;
 

@@ -4,13 +4,21 @@
  */
 package Presentacion;
 
+import Negocio.DTOS.AplicativoDTO;
 import Negocio.DTOS.PersonaDTO;
 import Negocio.DTOS.PersonaPreguntaDTO;
 import Negocio.DTOS.PreguntaDTO;
+import Negocio.DTOS.RolNegocioAplicativoDTO;
+import Negocio.DTOS.RolNegocioDTO;
+import Negocio.Servicios.AplicativoServicios;
 import Negocio.Servicios.PersonaPreguntaServicio;
 import Negocio.Servicios.PersonaServicio;
 import Negocio.Servicios.PreguntaServicio;
+import Negocio.Servicios.RolNegocioAplicativoServicio;
+import Negocio.Servicios.RolNegocioServicio;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,6 +26,11 @@ import javax.swing.JOptionPane;
  * @author nmais
  */
 public class Registro extends javax.swing.JFrame {
+
+    public AplicativoDTO[] gAplicativos = null;
+    public PreguntaDTO[] gPreguntas = null;
+    public RolNegocioDTO[] gRolNegocio = null;
+    
 
     /**
      * Creates new form Registro
@@ -95,6 +108,12 @@ public class Registro extends javax.swing.JFrame {
         jLabel8.setText("Repetir Contraseña:");
 
         jLabel9.setText("CI:");
+
+        cmbAplicativos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbAplicativosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -226,9 +245,9 @@ public class Registro extends javax.swing.JFrame {
                         txtCiudad.getText(), txtDepartamento.getText(), txtContraseña.getText());
                 try {
                     PersonaServicio.createPersona(xPersona);
-                    String textoComboBox =(String)cmbPreguntas.getSelectedItem();
-                    PreguntaDTO preg = PreguntaServicio.getPreguntaByPregunta(textoComboBox);
-                    PersonaPreguntaDTO xPersPreg = new PersonaPreguntaDTO(userId,preg.PregId,txtPreguntaSeguridad.getText());
+                    String textoComboBox = (String) cmbPreguntas.getSelectedItem();
+                    PreguntaDTO preg = getPreguntaSeleccionada(textoComboBox);
+                    PersonaPreguntaDTO xPersPreg = new PersonaPreguntaDTO(userId, preg.PregId, txtPreguntaSeguridad.getText());
                     PersonaPreguntaServicio.crearPersonaPregunta(xPersPreg);
                     JOptionPane.showMessageDialog(null, "Se agrego la persona correctamente");
                 } catch (SQLException e) {
@@ -243,14 +262,22 @@ public class Registro extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCrearActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-       vaciarCampos();
-       //cargarPreguntas();
-       PreguntaDTO[] preguntas = PreguntaServicio.getPreguntas();
-       for(PreguntaDTO x: preguntas){
-           cmbPreguntas.addItem(x.Pregunta);
-       }
+        vaciarCampos();
+        cargarPreguntas();
+        cargarAplicativos();
 
     }//GEN-LAST:event_formWindowOpened
+
+    private void cmbAplicativosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAplicativosActionPerformed
+        String textoComboBox = (String) cmbAplicativos.getSelectedItem();
+        AplicativoDTO xAplicativo = getAplicativoSeleccionado(textoComboBox);
+        try {
+            cargarRolesNegiocio(xAplicativo.AppId);
+        } catch (SQLException ex) {
+            Logger.getLogger(Registro.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_cmbAplicativosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,24 +313,71 @@ public class Registro extends javax.swing.JFrame {
             }
         });
     }
-    
-    
+
+    private void cargarPreguntas() {
+        gPreguntas = PreguntaServicio.getPreguntas();
+        for (PreguntaDTO x : gPreguntas) {
+            cmbPreguntas.addItem(x.Pregunta);
+
+        }
+    }
+
+    private PreguntaDTO getPreguntaSeleccionada(String pPregunta) {
+        for (PreguntaDTO x : gPreguntas) {
+            if (x.Pregunta.equals(pPregunta)) {
+                return x;
+            }
+        }
+        return null;
+    }
+
+    private void cargarAplicativos() {
+        gAplicativos = AplicativoServicios.getAplicativos();
+        for (AplicativoDTO x : gAplicativos) {
+            cmbAplicativos.addItem(x.NombreApp);
+        }
+    }
+
+    private AplicativoDTO getAplicativoSeleccionado(String pNombreApp) {
+        for (AplicativoDTO x : gAplicativos) {
+            if (x.NombreApp.equals(pNombreApp)) {
+                return x;
+            }
+        }
+        return null;
+    }
+
+    private void cargarRolesNegiocio(int pId) throws SQLException {
+        RolNegocioAplicativoDTO[] xRolNegocioAplicativos = RolNegocioAplicativoServicio.getRolNegocioAplicativoByAppId(pId);
+        if (xRolNegocioAplicativos != null) {
+            gRolNegocio = new RolNegocioDTO[xRolNegocioAplicativos.length];
+            int i = 0;
+            for (RolNegocioAplicativoDTO x : xRolNegocioAplicativos) {
+                gRolNegocio[i] = RolNegocioServicio.getRolNegocioById(x.RolNegId);
+            }
+            for (RolNegocioDTO x : gRolNegocio) {
+                cmbRolNegocio.addItem(x.Descripcion);
+            }
+        }
+
+    }
+
     private boolean chequeoContraseñas() {
         String pass1 = txtContraseña.getText();
         String pass2 = txtContraseña2.getText();
         return pass1.equals(pass2);
     }
-    
-    private void vaciarCampos(){
-       txtUserId.setText("");
-       txtNombre.setText("");
-       txtApellido.setText("");
-       txtCiudad.setText("");
-       txtContraseña.setText("");
-       txtContraseña2.setText("");
-       txtDepartamento.setText("");
-       txtDireccion.setText("");
-       txtPreguntaSeguridad.setText("");
+
+    private void vaciarCampos() {
+        txtUserId.setText("");
+        txtNombre.setText("");
+        txtApellido.setText("");
+        txtCiudad.setText("");
+        txtContraseña.setText("");
+        txtContraseña2.setText("");
+        txtDepartamento.setText("");
+        txtDireccion.setText("");
+        txtPreguntaSeguridad.setText("");
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

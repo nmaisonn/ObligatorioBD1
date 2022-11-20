@@ -5,8 +5,7 @@
 package Negocio.Servicios;
 
 import Data.DAO.PreguntaDAO;
-import Data.Modelos.PreguntaModel;
-import Negocio.DTOS.PreguntaDTO;
+
 import Data.Modelos.PreguntaModel;
 import Negocio.DTOS.PreguntaDTO;
 import java.sql.SQLException;
