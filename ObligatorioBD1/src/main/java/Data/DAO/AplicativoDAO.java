@@ -9,6 +9,7 @@ import Recursos.Conexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 /**
  *
@@ -17,7 +18,8 @@ import java.sql.SQLException;
 public class AplicativoDAO {
 
     public static AplicativoModel[] getAplicativos() throws SQLException {
-        AplicativoModel[] xAplicativos = null;
+        LinkedList<AplicativoModel> xAplicativos = new LinkedList();
+
         String sql = "select * from Aplicativos";
         Conexion xConexion = Conexion.GetInstance();
         PreparedStatement stmt = xConexion.conn.prepareStatement(sql);
@@ -25,13 +27,19 @@ public class AplicativoDAO {
             ResultSet rs = stmt.executeQuery();
             int i = 0;
             while (rs.next()) {
-                xAplicativos[i] = new AplicativoModel(Integer.parseInt(rs.getString(1)), rs.getString(2));
-                i++;
+                xAplicativos.add(new AplicativoModel(Integer.parseInt(rs.getString(1)), rs.getString(2)));
             }
-
         } catch (SQLException e) {
             throw new Error("Problem", e);
         }
-        return xAplicativos;
+        if (!xAplicativos.isEmpty()) {
+            int i = 0;
+            AplicativoModel[] xRetorno = new AplicativoModel[xAplicativos.size()];
+            for (AplicativoModel x : xAplicativos) {
+                xRetorno[i] = x;
+            }
+            return xRetorno;
+        }
+        return null;
     }
 }
