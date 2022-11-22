@@ -37,6 +37,7 @@ public class RolNegocioAplicativoDAO {
             RolNegocioAplicativoModel[] xRetorno = new RolNegocioAplicativoModel[xRolNegocioAplicativoModels.size()];
             for (RolNegocioAplicativoModel x : xRolNegocioAplicativoModels) {
                 xRetorno[i] = x;
+                i++;
             }
             return xRetorno;
         }

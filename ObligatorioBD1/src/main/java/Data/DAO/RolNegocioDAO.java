@@ -17,7 +17,7 @@ import java.sql.SQLException;
 public class RolNegocioDAO {
      public static RolNegocioModel getRolNegocioById(int pRolNegId) throws SQLException {
         RolNegocioModel xRolNegocioModel = null;
-        String sql = "select * from Roles_Negocio where rol _neg_id= ?";
+        String sql = "select * from Roles_Negocio where rol_neg_id= ?";
         Conexion xConexion = Conexion.GetInstance();
         PreparedStatement stmt = xConexion.conn.prepareStatement(sql);
         try {

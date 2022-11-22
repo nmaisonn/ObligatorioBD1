@@ -37,6 +37,7 @@ public class AplicativoDAO {
             AplicativoModel[] xRetorno = new AplicativoModel[xAplicativos.size()];
             for (AplicativoModel x : xAplicativos) {
                 xRetorno[i] = x;
+                i++;
             }
             return xRetorno;
         }

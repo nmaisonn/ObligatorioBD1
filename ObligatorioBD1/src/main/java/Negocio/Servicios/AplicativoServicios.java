@@ -24,6 +24,7 @@ public class AplicativoServicios {
                 int i = 0;
                 for (AplicativoModel x : aplicativosModel) {
                     aplicativosDTO[i]= new AplicativoDTO(x.AppId,x.NombreApp);
+                    i++;
                 }
                 return aplicativosDTO;
             }

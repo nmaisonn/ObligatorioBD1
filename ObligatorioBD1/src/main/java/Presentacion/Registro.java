@@ -30,7 +30,6 @@ public class Registro extends javax.swing.JFrame {
     public AplicativoDTO[] gAplicativos = null;
     public PreguntaDTO[] gPreguntas = null;
     public RolNegocioDTO[] gRolNegocio = null;
-    
 
     /**
      * Creates new form Registro
@@ -109,9 +108,33 @@ public class Registro extends javax.swing.JFrame {
 
         jLabel9.setText("CI:");
 
+        cmbAplicativos.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                cmbAplicativosItemStateChanged(evt);
+            }
+        });
+        cmbAplicativos.addPopupMenuListener(new javax.swing.event.PopupMenuListener() {
+            public void popupMenuCanceled(javax.swing.event.PopupMenuEvent evt) {
+            }
+            public void popupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {
+                cmbAplicativosPopupMenuWillBecomeInvisible(evt);
+            }
+            public void popupMenuWillBecomeVisible(javax.swing.event.PopupMenuEvent evt) {
+            }
+        });
+        cmbAplicativos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cmbAplicativosMouseClicked(evt);
+            }
+        });
         cmbAplicativos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cmbAplicativosActionPerformed(evt);
+            }
+        });
+        cmbAplicativos.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                cmbAplicativosPropertyChange(evt);
             }
         });
 
@@ -130,19 +153,7 @@ public class Registro extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel4)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel3)
-                                            .addGap(38, 38, 38)
-                                            .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(jLabel5)
-                                            .addGap(44, 44, 44)
-                                            .addComponent(txtCiudad)))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 275, Short.MAX_VALUE)))
+                            .addComponent(jLabel4)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addGap(18, 18, 18)
@@ -151,6 +162,15 @@ public class Registro extends javax.swing.JFrame {
                                 .addComponent(jLabel8)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtContraseña2, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel3)
+                                    .addGap(38, 38, 38)
+                                    .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel5)
+                                    .addGap(44, 44, 44)
+                                    .addComponent(txtCiudad)))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2)
@@ -160,9 +180,9 @@ public class Registro extends javax.swing.JFrame {
                                     .addComponent(txtUserId, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(119, 119, 119)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(cmbAplicativos, 0, 219, Short.MAX_VALUE)
-                                    .addComponent(cmbRolNegocio, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmbAplicativos, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(cmbRolNegocio, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel6)
@@ -176,7 +196,7 @@ public class Registro extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(230, 230, 230)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -188,16 +208,12 @@ public class Registro extends javax.swing.JFrame {
                     .addComponent(jLabel9)
                     .addComponent(txtUserId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cmbAplicativos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addComponent(cmbRolNegocio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbRolNegocio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -269,15 +285,30 @@ public class Registro extends javax.swing.JFrame {
     }//GEN-LAST:event_formWindowOpened
 
     private void cmbAplicativosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbAplicativosActionPerformed
+
+
+    }//GEN-LAST:event_cmbAplicativosActionPerformed
+
+    private void cmbAplicativosItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbAplicativosItemStateChanged
+
+    }//GEN-LAST:event_cmbAplicativosItemStateChanged
+
+    private void cmbAplicativosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbAplicativosMouseClicked
+
+    }//GEN-LAST:event_cmbAplicativosMouseClicked
+
+    private void cmbAplicativosPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cmbAplicativosPropertyChange
+
+    }//GEN-LAST:event_cmbAplicativosPropertyChange
+
+    private void cmbAplicativosPopupMenuWillBecomeInvisible(javax.swing.event.PopupMenuEvent evt) {//GEN-FIRST:event_cmbAplicativosPopupMenuWillBecomeInvisible
         String textoComboBox = (String) cmbAplicativos.getSelectedItem();
         AplicativoDTO xAplicativo = getAplicativoSeleccionado(textoComboBox);
         try {
             cargarRolesNegiocio(xAplicativo.AppId);
         } catch (SQLException ex) {
-            Logger.getLogger(Registro.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-    }//GEN-LAST:event_cmbAplicativosActionPerformed
+    }//GEN-LAST:event_cmbAplicativosPopupMenuWillBecomeInvisible
 
     /**
      * @param args the command line arguments
@@ -334,6 +365,7 @@ public class Registro extends javax.swing.JFrame {
     private void cargarAplicativos() {
         gAplicativos = AplicativoServicios.getAplicativos();
         for (AplicativoDTO x : gAplicativos) {
+            String nombre = x.NombreApp;
             cmbAplicativos.addItem(x.NombreApp);
         }
     }
@@ -354,6 +386,7 @@ public class Registro extends javax.swing.JFrame {
             int i = 0;
             for (RolNegocioAplicativoDTO x : xRolNegocioAplicativos) {
                 gRolNegocio[i] = RolNegocioServicio.getRolNegocioById(x.RolNegId);
+                i++;
             }
             for (RolNegocioDTO x : gRolNegocio) {
                 cmbRolNegocio.addItem(x.Descripcion);
