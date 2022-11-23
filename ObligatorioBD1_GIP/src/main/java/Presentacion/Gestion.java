@@ -6,6 +6,9 @@ package Presentacion;
 
 import Negocio.DTOS.PermisoDTO;
 import Negocio.Servicios.PermisoServicio;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -13,7 +16,9 @@ import javax.swing.table.DefaultTableModel;
  * @author prueba
  */
 public class Gestion extends javax.swing.JFrame {
+
     static DefaultTableModel modeloPermisos;
+
     /**
      * Creates new form Gestion
      */
@@ -103,23 +108,29 @@ public class Gestion extends javax.swing.JFrame {
         int cedula = Integer.parseInt(tablaPermisos.getValueAt(tablaPermisos.getSelectedRow(), 0).toString());
         int rol = Integer.parseInt(tablaPermisos.getValueAt(tablaPermisos.getSelectedRow(), 1).toString());
         int app = Integer.parseInt(tablaPermisos.getValueAt(tablaPermisos.getSelectedRow(), 2).toString());
-           PermisoDTO permiso = PermisoServicio.updatePermisoAceptado(cedula, rol, app);
+        PermisoDTO permiso = PermisoServicio.updatePermisoAceptado(cedula, rol, app);
+        //vaciar tabla
+        cargarTabla();
     }//GEN-LAST:event_AceptarActionPerformed
 
     private void RechazarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RechazarActionPerformed
-  
-    int cedula = Integer.parseInt(tablaPermisos.getValueAt(tablaPermisos.getSelectedRow(), 0).toString());
-    int rol = Integer.parseInt(tablaPermisos.getValueAt(tablaPermisos.getSelectedRow(), 1).toString());
-    int app = Integer.parseInt(tablaPermisos.getValueAt(tablaPermisos.getSelectedRow(), 2).toString());
-    PermisoDTO permiso = PermisoServicio.updatePermisoRechazado(cedula, rol, app);
-        
-           /* String permisoId = rows.toString(); 
-                    System.out.print(permisoId);                            // ver esto como verga
-            // ver como hacer para que seleccione la id del permiso 
-              PermisoDTO permiso = PermisoServicio.getPermisoById(Integer.parseInt(permisoId));
-              permiso.Estado = "rechazado";
+        int cedula = Integer.parseInt(tablaPermisos.getValueAt(tablaPermisos.getSelectedRow(), 0).toString());
+        int rol = Integer.parseInt(tablaPermisos.getValueAt(tablaPermisos.getSelectedRow(), 1).toString());
+        int app = Integer.parseInt(tablaPermisos.getValueAt(tablaPermisos.getSelectedRow(), 2).toString());
+        try {
+            PermisoDTO permiso = PermisoServicio.updatePermisoRechazado(cedula, rol, app);
+
+            /* String permisoId = rows.toString();
+            System.out.print(permisoId);                            // ver esto como verga
+            // ver como hacer para que seleccione la id del permiso
+            PermisoDTO permiso = PermisoServicio.getPermisoById(Integer.parseInt(permisoId));
+            permiso.Estado = "rechazado";
             //modeloPermisos.removeRow(rows[i]-i); se borra la row desp de rechazada o noo?*/
-        
+        } catch (SQLException ex) {
+            Logger.getLogger(Gestion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        //vaciar tabla
+        cargarTabla();
     }//GEN-LAST:event_RechazarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -130,7 +141,7 @@ public class Gestion extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        
+
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -157,29 +168,29 @@ public class Gestion extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             new Gestion().setVisible(true);
-            
-           
+
         });
-        
+
     }
-    
-    private void cargarTabla(){
-        PermisoDTO [] permisos = PermisoServicio.getPermisos();
-        
-         for(PermisoDTO p: permisos){
-             
-            String[] texto = new String[5];
+
+    private void cargarTabla() {
+        PermisoDTO[] permisos = PermisoServicio.getPermisos();
+
+        for (PermisoDTO p : permisos) {
+
+            String[] texto = new String[4];
+
             texto[0] = String.valueOf(p.UserId);
             texto[1] = String.valueOf(p.RolNegId);
             texto[2] = String.valueOf(p.AppId);
-            texto[4] = String.valueOf(p.Estado);
-            
-            modeloPermisos.addRow(texto); 
-          };
+            texto[3] = p.Estado;
+
+            modeloPermisos.addRow(texto);
+        }
 
     }
-    
-     private void setearModeloTablaPermisos() {
+
+    private void setearModeloTablaPermisos() {
         modeloPermisos = new DefaultTableModel();
         modeloPermisos.addColumn("C.I");
         modeloPermisos.addColumn("Rol");
@@ -190,7 +201,7 @@ public class Gestion extends javax.swing.JFrame {
         this.tablaPermisos.setModel(modeloPermisos);
         this.tablaPermisos.setCellSelectionEnabled(false);
         this.tablaPermisos.setRowSelectionAllowed(true);
-        
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
