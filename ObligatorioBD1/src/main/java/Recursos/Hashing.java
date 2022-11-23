@@ -19,12 +19,12 @@ public class Hashing {
     }
 
     public static String DoHash(String pTexto) {
-        String hasheada = " ";
+        StringBuilder stb = new StringBuilder();
         try {
             MessageDigest messageD = MessageDigest.getInstance("SHA");
             messageD.update(pTexto.getBytes());
             byte[] resultByteArray = messageD.digest();
-            StringBuilder stb = new StringBuilder();
+
             for (byte x : resultByteArray) {
                 stb.append(String.format("%02x", x));
             }
@@ -32,6 +32,6 @@ public class Hashing {
             Logger.getLogger(Hashing.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return hasheada;
+        return stb.toString();
     }
 }

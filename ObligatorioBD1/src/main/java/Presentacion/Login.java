@@ -278,7 +278,7 @@ public class Login extends javax.swing.JFrame {
         PersonaDTO xPersona = PersonaServicio.getPersonaByUserId(Integer.parseInt(txtCI.getText()));
         if (xPersona != null) {
             try {
-                if (xPersona.Password.equals(txtContraseña.getText())) {
+                if (xPersona.Password.equals(Hashing.DoHash(txtContraseña.getText()))) {
                     JOptionPane.showMessageDialog(null, "Logeado correctamente!");
                 } else {
                     JOptionPane.showMessageDialog(null, "Error al logear!");
