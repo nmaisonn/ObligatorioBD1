@@ -4,17 +4,24 @@
  */
 package Presentacion;
 
+import Negocio.DTOS.AplicativoDTO;
+import Negocio.Servicios.AplicativoServicio;
+import javax.swing.table.DefaultTableModel;
+
+
 /**
  *
  * @author prueba
  */
 public class AplicativosMenu extends javax.swing.JFrame {
-
+static DefaultTableModel modeloAplicativos;
+public AplicativoDTO[] aplicativos;
     /**
      * Creates new form AplicativosMenu
      */
     public AplicativosMenu() {
         initComponents();
+        setearModeloTablaAplicativos();
     }
 
     /**
@@ -26,20 +33,88 @@ public class AplicativosMenu extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        FuncionesRol = new javax.swing.JFrame();
+        nombreAplicacion = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        BackBoton = new javax.swing.JButton();
+        IrBoton = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaAplicativos = new javax.swing.JTable();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-
-        jButton1.setText("Ir");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        FuncionesRol.addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                FuncionesRolWindowOpened(evt);
             }
         });
 
+        nombreAplicacion.setText("jLabel1");
+
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null},
+                {null},
+                {null},
+                {null}
+            },
+            new String [] {
+                "Funciones del Rol"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        BackBoton.setText("Back");
+        BackBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackBotonActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout FuncionesRolLayout = new javax.swing.GroupLayout(FuncionesRol.getContentPane());
+        FuncionesRol.getContentPane().setLayout(FuncionesRolLayout);
+        FuncionesRolLayout.setHorizontalGroup(
+            FuncionesRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FuncionesRolLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(BackBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(60, 60, 60))
+            .addGroup(FuncionesRolLayout.createSequentialGroup()
+                .addGroup(FuncionesRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(FuncionesRolLayout.createSequentialGroup()
+                        .addGap(37, 37, 37)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(FuncionesRolLayout.createSequentialGroup()
+                        .addGap(231, 231, 231)
+                        .addComponent(nombreAplicacion)))
+                .addContainerGap(142, Short.MAX_VALUE))
+        );
+        FuncionesRolLayout.setVerticalGroup(
+            FuncionesRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(FuncionesRolLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(nombreAplicacion)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
+                .addComponent(BackBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(27, Short.MAX_VALUE))
+        );
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
+
+        IrBoton.setText("Ir");
+        IrBoton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                IrBotonActionPerformed(evt);
+            }
+        });
+
+        tablaAplicativos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
                 {null},
@@ -50,7 +125,7 @@ public class AplicativosMenu extends javax.swing.JFrame {
                 "Nombre Aplicacion"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tablaAplicativos);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -58,29 +133,42 @@ public class AplicativosMenu extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 432, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(309, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(IrBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(44, 44, 44))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(20, Short.MAX_VALUE)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(426, 426, 426)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 408, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(7, 7, 7)
+                .addComponent(IrBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void IrBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IrBotonActionPerformed
+        String app = tablaAplicativos.getValueAt(tablaAplicativos.getSelectedRow(), 0).toString();
+        FuncionesRol.setVisible(true);
+    }//GEN-LAST:event_IrBotonActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        cargarTabla();
+    }//GEN-LAST:event_formWindowOpened
+
+    private void FuncionesRolWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_FuncionesRolWindowOpened
+        nombreAplicacion.setText("");
+    }//GEN-LAST:event_FuncionesRolWindowOpened
+
+    private void BackBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBotonActionPerformed
+       FuncionesRol.setVisible(false);
+    }//GEN-LAST:event_BackBotonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -116,10 +204,40 @@ public class AplicativosMenu extends javax.swing.JFrame {
             }
         });
     }
+     private void cargarTabla(){
+        AplicativoDTO [] aplicativos = AplicativoServicio.getAplicativos(0);
+        
+         for(AplicativoDTO p: aplicativos){
+             
+            String[] texto = new String[5];
+            texto[0] = String.valueOf(p.AppId);
+            texto[1] = String.valueOf(p.NombreApp);
+  
+            
+            modeloAplicativos.addRow(texto); 
+          };
+
+    }
+      private void setearModeloTablaAplicativos() {
+        modeloAplicativos = new DefaultTableModel();
+        modeloAplicativos.addColumn("Nombre aplicación");
+       
+
+        //modeloProcesos.addColumn("RAM (MB)");
+        this.tablaAplicativos.setModel(modeloAplicativos);
+        this.tablaAplicativos.setCellSelectionEnabled(false);
+        this.tablaAplicativos.setRowSelectionAllowed(true);
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton BackBoton;
+    private javax.swing.JFrame FuncionesRol;
+    private javax.swing.JButton IrBoton;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel nombreAplicacion;
+    private javax.swing.JTable tablaAplicativos;
     // End of variables declaration//GEN-END:variables
 }

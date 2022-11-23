@@ -18,34 +18,7 @@ import java.util.LinkedList;
  */
 public class PermisoDAO {
     
-    public static PermisoModelo updatePermisoRechazado(int userId, int rolNegId, int appId) throws SQLException {
-        PermisoModelo xPermiso = null;
-        String sql = "update Permisos set Estado='rechazado' where user_id=" + userId + " rol_neg_id=" + rolNegId + "app_id=" + appId;
-        Conexion xConexion = Conexion.GetInstance();
-        PreparedStatement stmt = xConexion.conn.prepareStatement(sql);
-        
-        try {
-            stmt.executeQuery();
-            
-        } catch (SQLException e) {
-            throw new Error("Problem", e);
-        }
-        return xPermiso;
-    };
-     public static PermisoModelo updatePermisoAceptado(int userId, int rolNegId, int appId) throws SQLException {
-        PermisoModelo xPermiso = null;
-        String sql = "update Permisos set Estado='aceptado' where user_id=" + userId + " rol_neg_id=" + rolNegId + "app_id=" + appId;
-        Conexion xConexion = Conexion.GetInstance();
-        PreparedStatement stmt = xConexion.conn.prepareStatement(sql);
-        
-        try {
-            stmt.executeQuery();
-            
-        } catch (SQLException e) {
-            throw new Error("Problem", e);
-        }
-        return xPermiso;
-    };
+     
     
     public static PermisoModelo[] getPermisos() throws SQLException{
         LinkedList<PermisoModelo> xPermisos = new LinkedList();
@@ -77,5 +50,30 @@ public class PermisoDAO {
         }
         return xRetorno;
     };
+    
+    public static int[] getAppIdByUserId(int userId) throws SQLException {
+        LinkedList<Integer> xPermisos = new LinkedList();
+        String sql = "select app_id From Permisos WHERE user_id =";
+        Conexion xConexion = Conexion.GetInstance();
+        Statement stmt = xConexion.conn.createStatement();
+        try {
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                Integer appId = Integer.parseInt(rs.getString(1));
+                xPermisos.add(appId);
+                
+            }
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        }
+        int[] xRetorno = new int[xPermisos.size()];
+        int i = 0;
+        for (Integer x : xPermisos) {
+            xRetorno[i] = x;
+            i++;
+        }
+        return xRetorno;
+    };
+    
     
 }
