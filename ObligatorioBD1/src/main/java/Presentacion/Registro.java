@@ -5,18 +5,21 @@
 package Presentacion;
 
 import Negocio.DTOS.AplicativoDTO;
+import Negocio.DTOS.PermisoDTO;
 import Negocio.DTOS.PersonaDTO;
 import Negocio.DTOS.PersonaPreguntaDTO;
 import Negocio.DTOS.PreguntaDTO;
 import Negocio.DTOS.RolNegocioAplicativoDTO;
 import Negocio.DTOS.RolNegocioDTO;
-import Negocio.Servicios.AplicativoServicios;
+import Negocio.Servicios.AplicativoServicio;
+import Negocio.Servicios.PermisoServicio;
 import Negocio.Servicios.PersonaPreguntaServicio;
 import Negocio.Servicios.PersonaServicio;
 import Negocio.Servicios.PreguntaServicio;
 import Negocio.Servicios.RolNegocioAplicativoServicio;
 import Negocio.Servicios.RolNegocioServicio;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -265,6 +268,12 @@ public class Registro extends javax.swing.JFrame {
                     PreguntaDTO preg = getPreguntaSeleccionada(textoComboBox);
                     PersonaPreguntaDTO xPersPreg = new PersonaPreguntaDTO(userId, preg.PregId, txtPreguntaSeguridad.getText());
                     PersonaPreguntaServicio.crearPersonaPregunta(xPersPreg);
+                    String textoComboAplicativo = (String) cmbAplicativos.getSelectedItem();
+                    int idAplicativo = obtenerIdAplicativoByNombre(textoComboAplicativo);
+                    String textoComboRolNegocio = (String) cmbRolNegocio.getSelectedItem();
+                    int idRolNegocio = obtenerIdRolNegocioByNombre(textoComboRolNegocio);
+                    PermisoDTO xSolicitud = new PermisoDTO(xPersPreg.UserId,idRolNegocio,idAplicativo);
+                    PermisoServicio.crearSolicitud(xSolicitud);
                     JOptionPane.showMessageDialog(null, "Se agrego la persona correctamente");
                 } catch (SQLException e) {
                     JOptionPane.showMessageDialog(null, "Hubo un error al agregar a la persona");
@@ -305,6 +314,7 @@ public class Registro extends javax.swing.JFrame {
         String textoComboBox = (String) cmbAplicativos.getSelectedItem();
         AplicativoDTO xAplicativo = getAplicativoSeleccionado(textoComboBox);
         try {
+            cmbRolNegocio.removeAllItems();
             cargarRolesNegiocio(xAplicativo.AppId);
         } catch (SQLException ex) {
         }
@@ -363,7 +373,7 @@ public class Registro extends javax.swing.JFrame {
     }
 
     private void cargarAplicativos() {
-        gAplicativos = AplicativoServicios.getAplicativos();
+        gAplicativos = AplicativoServicio.getAplicativos();
         for (AplicativoDTO x : gAplicativos) {
             String nombre = x.NombreApp;
             cmbAplicativos.addItem(x.NombreApp);
@@ -399,6 +409,24 @@ public class Registro extends javax.swing.JFrame {
         String pass1 = txtContraseña.getText();
         String pass2 = txtContraseña2.getText();
         return pass1.equals(pass2);
+    }
+
+    private int obtenerIdAplicativoByNombre(String pTexto) {
+        for (AplicativoDTO x : gAplicativos) {
+            if (x.NombreApp.equals(pTexto)) {
+                return x.AppId;
+            }
+        }
+        return 0;
+    }
+    
+    private int obtenerIdRolNegocioByNombre(String pTexto) {
+        for (RolNegocioDTO x : gRolNegocio) {
+            if (x.Descripcion.equals(pTexto)) {
+                return x.RolNegId;
+            }
+        }
+        return 0;
     }
 
     private void vaciarCampos() {

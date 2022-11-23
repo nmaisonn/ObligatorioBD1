@@ -13,7 +13,7 @@ import java.sql.SQLException;
  *
  * @author nmais
  */
-public class AplicativoServicios {
+public class AplicativoServicio {
 
     public static AplicativoDTO[] getAplicativos() {
         try {
