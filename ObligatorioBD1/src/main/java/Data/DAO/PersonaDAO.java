@@ -9,6 +9,7 @@ import Recursos.Conexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
 /**
  *
  * @author nmais
@@ -45,6 +46,19 @@ public class PersonaDAO {
             stmt.setString(5, pPersona.Ciudad);
             stmt.setString(6, pPersona.Departamento);
             stmt.setString(7, pPersona.Hashpwd);
+            int cont = stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        }
+    }
+
+    public static void updatePassword(PersonaModel pPersona) throws SQLException {
+        String sql = "update Personas set hashpwd = ? where user_id = ?";
+        Conexion xConexion = Conexion.GetInstance();
+        PreparedStatement stmt = xConexion.conn.prepareStatement(sql);
+        try {
+            stmt.setString(1, pPersona.Hashpwd);
+            stmt.setInt(2, pPersona.UserId);
             int cont = stmt.executeUpdate();
         } catch (SQLException e) {
             throw new Error("Problem", e);
