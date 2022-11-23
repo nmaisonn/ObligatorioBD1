@@ -18,7 +18,8 @@ import java.util.LinkedList;
 public class AplicativoDAO {
     public static AplicativoModelo getAplicativo(int id) throws SQLException {
         AplicativoModelo xAplicativo = null;
-        String sql = "select * from Aplicativos where app_id = ";
+        String x = Integer.toString(id);
+        String sql = "select * from Aplicativos where app_id=" + x;
  
         Conexion xConexion = Conexion.GetInstance();
         Statement stmt = xConexion.conn.createStatement();

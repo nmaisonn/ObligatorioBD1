@@ -18,10 +18,11 @@ import java.util.LinkedList;
  */
 public class RolAplicativoDAO {
     
-     public static RolAplicativoModelo[] getRoles(int appIdBD) throws SQLException{
-        LinkedList<RolAplicativoModelo> xRoles = new LinkedList();
+     public static RolAplicativoModelo getRolAplicativo(int appIdBD, int rolIdBD) throws SQLException{
+        RolAplicativoModelo xRol = null;
         String id = Integer.toString(appIdBD);
-        String sql = "select * from Roles_Aplicativos where app_id=" + id; //cambiar
+        String idRol = Integer.toString(rolIdBD);
+        String sql = "select * from Roles_Aplicativos where app_id=" + id + "and rol_id=" + idRol; //cambiar
         Conexion xConexion = Conexion.GetInstance();
         Statement stmt = xConexion.conn.createStatement();
         try {
@@ -30,17 +31,12 @@ public class RolAplicativoDAO {
                 int appId = Integer.parseInt(rs.getString(1));
                 int rolAppId = Integer.parseInt(rs.getString(2));
                 String descripcion = rs.getDate(4).toString();
-                xRoles.add(new RolAplicativoModelo( appId, rolAppId, descripcion));
+                xRol = new RolAplicativoModelo( appId, rolAppId, descripcion);
             }
         } catch (SQLException e) {
             throw new Error("Problem", e);
         }
-        RolAplicativoModelo[] xRetorno = new RolAplicativoModelo[xRoles.size()];
-        int i = 0;
-        for (RolAplicativoModelo x : xRoles) {
-            xRetorno[i] = x;
-            i++;
-        }
+        RolAplicativoModelo xRetorno = new RolAplicativoModelo(xRol.AppId,xRol.RolId, xRol.Descripcion);
         return xRetorno;
     };
 }

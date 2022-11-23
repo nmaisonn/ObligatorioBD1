@@ -6,8 +6,10 @@ package Presentacion;
 
 import Negocio.DTOS.AplicativoDTO;
 import Negocio.DTOS.RolAplicativoDTO;
+import Negocio.DTOS.RolNegocioAplicativoDTO;
 import Negocio.Servicios.AplicativoServicio;
 import Negocio.Servicios.RolAplicativoServicio;
+import Negocio.Servicios.RolNegocioAplicativoServicio;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -85,21 +87,21 @@ public AplicativoDTO[] aplicativos;
             .addGroup(FuncionesRolLayout.createSequentialGroup()
                 .addGroup(FuncionesRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(FuncionesRolLayout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(FuncionesRolLayout.createSequentialGroup()
-                        .addGap(231, 231, 231)
+                        .addGap(153, 153, 153)
                         .addComponent(nombreAplicacion)))
-                .addContainerGap(142, Short.MAX_VALUE))
+                .addContainerGap(298, Short.MAX_VALUE))
         );
         FuncionesRolLayout.setVerticalGroup(
             FuncionesRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(FuncionesRolLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(nombreAplicacion)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addGap(43, 43, 43)
                 .addComponent(BackBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(27, Short.MAX_VALUE))
         );
@@ -167,8 +169,8 @@ public AplicativoDTO[] aplicativos;
     }//GEN-LAST:event_formWindowOpened
 
     private void FuncionesRolWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_FuncionesRolWindowOpened
-        nombreAplicacion.setText("");
-        RolAplicativoServicio.getRolesAplicativos(0); // id app
+        cargarTablaRolesAplicativo();
+        
     }//GEN-LAST:event_FuncionesRolWindowOpened
 
     private void BackBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBotonActionPerformed
@@ -210,13 +212,13 @@ public AplicativoDTO[] aplicativos;
         });
     }
      private void cargarTablaAplicativos(){
-        AplicativoDTO [] aplicativos = AplicativoServicio.getAplicativos(0); //ide user
+        AplicativoDTO [] aplicativos = AplicativoServicio.getAplicativos(123); //ide user
         
          for(AplicativoDTO p: aplicativos){
              
             String[] texto = new String[5];
-            texto[0] = String.valueOf(p.AppId);
-            texto[1] = String.valueOf(p.NombreApp);
+            //texto[0] = String.valueOf(p.AppId);
+            texto[0] = String.valueOf(p.NombreApp);
   
             
             modeloAplicativos.addRow(texto); 
@@ -224,14 +226,21 @@ public AplicativoDTO[] aplicativos;
 
     }
     private void cargarTablaRolesAplicativo(){
-        RolAplicativoDTO []rolesAplicativos = RolAplicativoServicio.getRolesAplicativos(0); //ide user
+        nombreAplicacion.setText("");
+        RolNegocioAplicativoDTO[] rolesNeg = RolNegocioAplicativoServicio.getRolesNegocioAplicativoByIds(0, 1); //id user y id app
+        RolAplicativoDTO []  roles = new RolAplicativoDTO[rolesNeg.length];
+        int i = 0;
+        for(RolNegocioAplicativoDTO rol : rolesNeg){
+            roles[i] = RolAplicativoServicio.getRolAplicativo(rol.AppId, rol.RolId );// id app
+            i++;
+        }
         
-        for(RolAplicativoDTO p: rolesAplicativos){
+        for(RolAplicativoDTO p: roles){
 
            String[] texto = new String[1];
            //texto[0] = String.valueOf(p.AppId);
            //texto[1] = String.valueOf(p.RolId);
-           texto[2] = String.valueOf(p.Descripcion);
+           texto[0] = String.valueOf(p.Descripcion);
 
            modeloAplicativos.addRow(texto); 
         };

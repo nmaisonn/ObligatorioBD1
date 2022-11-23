@@ -53,7 +53,8 @@ public class PermisoDAO {
     
     public static int[] getAppIdByUserId(int userId) throws SQLException {
         LinkedList<Integer> xPermisos = new LinkedList();
-        String sql = "select app_id From Permisos WHERE user_id =";
+        String id = Integer.toString(userId);
+        String sql = "select app_id From Permisos where user_id=" + id;
         Conexion xConexion = Conexion.GetInstance();
         Statement stmt = xConexion.conn.createStatement();
         try {
