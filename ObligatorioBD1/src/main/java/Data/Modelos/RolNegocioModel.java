@@ -8,13 +8,13 @@ package Data.Modelos;
  *
  * @author nmais
  */
-public class PreguntaModel {
-    public int PregId;
-    public String Pregunta;
-
-
-    public PreguntaModel(int pPregId, String pPregunta) {
-        this.PregId = pPregId;
-        this.Pregunta = pPregunta;
+public class RolNegocioModel {
+    public int RolNegId;
+    public String DescripcionRolNeg;
+    
+    public RolNegocioModel(int pRolNegId, String pDescrcipcion)
+    {
+        this.RolNegId= pRolNegId;
+        this.DescripcionRolNeg= pDescrcipcion;
     }
 }

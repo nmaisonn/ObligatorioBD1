@@ -13,7 +13,6 @@ public class PersonaPreguntaModel {
     public int PregId;
     public String Respuesta;
 
-
     public PersonaPreguntaModel(int pUserId, int pPregId, String pRespuesta) {
         this.UserId = pUserId;
         this.PregId = pPregId;

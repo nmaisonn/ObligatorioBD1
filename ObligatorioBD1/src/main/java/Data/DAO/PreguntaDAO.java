@@ -21,7 +21,7 @@ public class PreguntaDAO {
 
     public static PreguntaModel getPreguntaByPregunta(String pPregunta) throws SQLException {
         PreguntaModel xPregunta = null;
-        String sql = "select * from Preguntas where pregunta = ?" ;
+        String sql = "select * from Preguntas where pregunta = ?";
         Conexion xConexion = Conexion.GetInstance();
         PreparedStatement stmt = xConexion.conn.prepareStatement(sql);
         try {
@@ -58,5 +58,22 @@ public class PreguntaDAO {
             i++;
         }
         return xRetorno;
+    }
+
+    public static PreguntaModel getPreguntaById(int pregId) throws SQLException {
+        PreguntaModel preg = null;
+        String sql = "select * from Preguntas where preg_id = ?" ;
+        Conexion xConexion = Conexion.GetInstance();
+        PreparedStatement stmt = xConexion.conn.prepareStatement(sql);
+        try {
+            stmt.setInt(1, pregId);
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                preg = new PreguntaModel(Integer.parseInt(rs.getString(1)), rs.getString(2));
+            }
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        }
+        return preg;
     }
 }

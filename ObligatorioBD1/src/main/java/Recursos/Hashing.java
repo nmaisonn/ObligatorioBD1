@@ -6,9 +6,6 @@ package Recursos;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,24 +15,23 @@ import java.util.logging.Logger;
  */
 public class Hashing {
 
-
     private Hashing() {
     }
-    
-    public static String DoHash(String pTexto){
+
+    public static String DoHash(String pTexto) {
         String hasheada = " ";
         try {
             MessageDigest messageD = MessageDigest.getInstance("SHA");
             messageD.update(pTexto.getBytes());
             byte[] resultByteArray = messageD.digest();
             StringBuilder stb = new StringBuilder();
-            for(byte x : resultByteArray){
-                stb.append(String.format("%02x",x));
+            for (byte x : resultByteArray) {
+                stb.append(String.format("%02x", x));
             }
         } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(Hashing.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return hasheada;
     }
 }

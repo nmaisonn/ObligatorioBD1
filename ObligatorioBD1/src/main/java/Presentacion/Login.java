@@ -10,7 +10,11 @@ import Negocio.DTOS.PreguntaDTO;
 import Negocio.Servicios.PersonaPreguntaServicio;
 import Negocio.Servicios.PersonaServicio;
 import Negocio.Servicios.PreguntaServicio;
+import Recursos.Hashing;
 import java.awt.Dimension;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -110,6 +114,11 @@ public class Login extends javax.swing.JFrame {
         jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jButton2MouseClicked(evt);
+            }
+        });
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -318,6 +327,29 @@ public class Login extends javax.swing.JFrame {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         // TODO add your handling code here:
+
+        // si el txt = respuesta le muestro la ventana de cambiar pass
+        // sino error
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        // TODO add your handling code here:
+        if (pass1.getText().equals(pass2.getText())) {
+            PersonaDTO xPersona = new PersonaDTO(Integer.parseInt(ciUser.getText()), "", "", "", "", "", Hashing.DoHash(pass1.getText()));
+            try {
+                PersonaServicio.changePassword(xPersona);
+            } catch (SQLException ex) {
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al cambiar la contraseña!");
+            pass1.setText("");
+            pass2.setText("");
+            ventanaRecuperar3.setVisible(false);
+        }
+    }//GEN-LAST:event_jButton3MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         PersonaDTO xPersona = PersonaServicio.getPersonaByUserId(Integer.parseInt(ciUser.getText()));
         PersonaPreguntaDTO persPreg = PersonaPreguntaServicio.getPersPregByUserId(xPersona.UserId);
 
@@ -330,22 +362,7 @@ public class Login extends javax.swing.JFrame {
             respuestaUser.setText("");
             ventanaRecuperar2.setVisible(false);
         }
-        // si el txt = respuesta le muestro la ventana de cambiar pass
-
-        // sino error
-    }//GEN-LAST:event_jButton2MouseClicked
-
-    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
-        // TODO add your handling code here:
-        if (pass1.getText().equals(pass2.getText())) {
-            // Cambio contraseña
-        } else {
-            JOptionPane.showMessageDialog(null, "Error al cambiar la contraseña!");
-            pass1.setText("");
-            pass2.setText("");
-            ventanaRecuperar3.setVisible(false);
-        }
-    }//GEN-LAST:event_jButton3MouseClicked
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

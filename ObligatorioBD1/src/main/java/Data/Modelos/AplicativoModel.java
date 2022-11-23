@@ -8,13 +8,12 @@ package Data.Modelos;
  *
  * @author nmais
  */
-public class PreguntaModel {
-    public int PregId;
-    public String Pregunta;
-
-
-    public PreguntaModel(int pPregId, String pPregunta) {
-        this.PregId = pPregId;
-        this.Pregunta = pPregunta;
+public class AplicativoModel {
+    public int AppId;
+    public String NombreApp;
+    
+    public AplicativoModel(int pId, String pNombreApp){
+        this.AppId=pId;
+        this.NombreApp=pNombreApp;
     }
 }
