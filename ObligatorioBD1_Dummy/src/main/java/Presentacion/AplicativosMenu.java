@@ -5,7 +5,9 @@
 package Presentacion;
 
 import Negocio.DTOS.AplicativoDTO;
+import Negocio.DTOS.RolAplicativoDTO;
 import Negocio.Servicios.AplicativoServicio;
+import Negocio.Servicios.RolAplicativoServicio;
 import javax.swing.table.DefaultTableModel;
 
 
@@ -15,6 +17,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AplicativosMenu extends javax.swing.JFrame {
 static DefaultTableModel modeloAplicativos;
+static DefaultTableModel modeloRolesAplicativos;
+
 public AplicativoDTO[] aplicativos;
     /**
      * Creates new form AplicativosMenu
@@ -36,7 +40,7 @@ public AplicativoDTO[] aplicativos;
         FuncionesRol = new javax.swing.JFrame();
         nombreAplicacion = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaRolesAplicativos = new javax.swing.JTable();
         BackBoton = new javax.swing.JButton();
         IrBoton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -50,7 +54,7 @@ public AplicativoDTO[] aplicativos;
 
         nombreAplicacion.setText("jLabel1");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaRolesAplicativos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null},
                 {null},
@@ -61,7 +65,7 @@ public AplicativoDTO[] aplicativos;
                 "Funciones del Rol"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tablaRolesAplicativos);
 
         BackBoton.setText("Back");
         BackBoton.addActionListener(new java.awt.event.ActionListener() {
@@ -159,11 +163,12 @@ public AplicativoDTO[] aplicativos;
     }//GEN-LAST:event_IrBotonActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        cargarTabla();
+        cargarTablaAplicativos();
     }//GEN-LAST:event_formWindowOpened
 
     private void FuncionesRolWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_FuncionesRolWindowOpened
         nombreAplicacion.setText("");
+        RolAplicativoServicio.getRolesAplicativos(0); // id app
     }//GEN-LAST:event_FuncionesRolWindowOpened
 
     private void BackBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBotonActionPerformed
@@ -204,8 +209,8 @@ public AplicativoDTO[] aplicativos;
             }
         });
     }
-     private void cargarTabla(){
-        AplicativoDTO [] aplicativos = AplicativoServicio.getAplicativos(0);
+     private void cargarTablaAplicativos(){
+        AplicativoDTO [] aplicativos = AplicativoServicio.getAplicativos(0); //ide user
         
          for(AplicativoDTO p: aplicativos){
              
@@ -218,7 +223,22 @@ public AplicativoDTO[] aplicativos;
           };
 
     }
-      private void setearModeloTablaAplicativos() {
+    private void cargarTablaRolesAplicativo(){
+        RolAplicativoDTO []rolesAplicativos = RolAplicativoServicio.getRolesAplicativos(0); //ide user
+        
+        for(RolAplicativoDTO p: rolesAplicativos){
+
+           String[] texto = new String[1];
+           //texto[0] = String.valueOf(p.AppId);
+           //texto[1] = String.valueOf(p.RolId);
+           texto[2] = String.valueOf(p.Descripcion);
+
+           modeloAplicativos.addRow(texto); 
+        };
+
+    }
+     
+    private void setearModeloTablaAplicativos() {
         modeloAplicativos = new DefaultTableModel();
         modeloAplicativos.addColumn("Nombre aplicación");
        
@@ -229,6 +249,17 @@ public AplicativoDTO[] aplicativos;
         this.tablaAplicativos.setRowSelectionAllowed(true);
         
     }
+    private void setearModeloTablaRolesAplicativos() {
+        modeloRolesAplicativos = new DefaultTableModel();
+        modeloRolesAplicativos.addColumn("Funciones");
+       
+
+        //modeloProcesos.addColumn("RAM (MB)");
+        this.tablaRolesAplicativos.setModel(modeloRolesAplicativos);
+        this.tablaRolesAplicativos.setCellSelectionEnabled(false);
+        this.tablaRolesAplicativos.setRowSelectionAllowed(true);
+        
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BackBoton;
@@ -236,8 +267,8 @@ public AplicativoDTO[] aplicativos;
     private javax.swing.JButton IrBoton;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel nombreAplicacion;
     private javax.swing.JTable tablaAplicativos;
+    private javax.swing.JTable tablaRolesAplicativos;
     // End of variables declaration//GEN-END:variables
 }

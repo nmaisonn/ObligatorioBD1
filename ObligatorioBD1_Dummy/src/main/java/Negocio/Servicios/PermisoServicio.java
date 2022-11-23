@@ -14,7 +14,6 @@ import Data.DAO.PermisoDAO;
  * @author prueba
  */
 public class PermisoServicio {
-   
      
      
    
@@ -33,6 +32,25 @@ public class PermisoServicio {
                 }
             }
             return xPermisos;
+        }
+        catch (SQLException e) {
+            throw new Error("Problem", e);
+        }
+    }
+     
+     public static int[] getAppIdByUserId(int userId) throws SQLException {
+          try{
+            int[] xAppIdsBD = PermisoDAO.getAppIdByUserId(userId);
+            int[] xAppIds = null;
+            if (xAppIdsBD != null) {
+                xAppIds = new int[xAppIdsBD.length];
+                int i = 0;
+                for (int x : xAppIdsBD) {
+                    xAppIds[i] = x;
+                    i++;
+                }
+            }
+            return xAppIds;
         }
         catch (SQLException e) {
             throw new Error("Problem", e);

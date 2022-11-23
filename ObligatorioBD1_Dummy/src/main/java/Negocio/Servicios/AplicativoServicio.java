@@ -15,9 +15,9 @@ import java.sql.SQLException;
  */
 public class AplicativoServicio {
     
-    public static AplicativoDTO[] getAplicativos() throws SQLException{
-        int [] appIds = PermisoServicio.getAppIdByUserId(0);
+    public static AplicativoDTO[] getAplicativos(int id) {
         try{
+            int [] appIds = PermisoServicio.getAppIdByUserId(0);
             AplicativoModelo[] xAplicativosBD = new AplicativoModelo[appIds.length];
             int i = 0;
             for (int x: appIds){

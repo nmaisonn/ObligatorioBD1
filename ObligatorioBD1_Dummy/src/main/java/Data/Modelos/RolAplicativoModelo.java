@@ -9,5 +9,13 @@ package Data.Modelos;
  * @author prueba
  */
 public class RolAplicativoModelo {
+    public int  AppId;
+    public int RolId;
+    public String Descripcion;
     
+    public RolAplicativoModelo(int appId, int rolId, String descripcion){
+        this.AppId = appId;
+        this.RolId = rolId;
+        this.Descripcion = descripcion;
+    }
 }

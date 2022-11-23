@@ -16,11 +16,10 @@ import java.util.LinkedList;
  * @author prueba
  */
 public class AplicativoDAO {
-    public static AplicativoModelo[] getAplicativos(int id) throws SQLException {
-       LinkedList<AplicativoModelo> xAplicativos = new LinkedList();
+    public static AplicativoModelo getAplicativo(int id) throws SQLException {
+        AplicativoModelo xAplicativo = null;
         String sql = "select * from Aplicativos where app_id = ";
-
-        //select * from Aplicativos where app_id = 
+ 
         Conexion xConexion = Conexion.GetInstance();
         Statement stmt = xConexion.conn.createStatement();
         try {
@@ -29,17 +28,12 @@ public class AplicativoDAO {
                 int appId = Integer.parseInt(rs.getString(1));
                 String nombreApp = rs.getString(2);
             
-                xAplicativos.add(new AplicativoModelo( appId, nombreApp));
+                xAplicativo = new AplicativoModelo(appId, nombreApp);
             }
         } catch (SQLException e) {
             throw new Error("Problem", e);
         }
-        AplicativoModelo[] xRetorno = new AplicativoModelo[xAplicativos.size()];
-        int i = 0;
-        for (AplicativoModelo x : xAplicativos) {
-            xRetorno[i] = x;
-            i++;
-        }
-        return xRetorno; 
+        
+        return xAplicativo; 
     }
 }
