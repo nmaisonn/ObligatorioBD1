@@ -185,8 +185,8 @@ public class RolesAplicativosMenu extends javax.swing.JFrame {
     }
     private void setearModeloTablaRolesAplicativos() {
         modeloRolesAplicativos = new DefaultTableModel();
-        modeloRolesAplicativos.addColumn("Rol");
-        modeloRolesAplicativos.addColumn("Funciones");
+        modeloRolesAplicativos.addColumn("Funcionalidad");
+        modeloRolesAplicativos.addColumn("Menu");
        
 
         this.tablaRolesAplicativos.setModel(modeloRolesAplicativos);
