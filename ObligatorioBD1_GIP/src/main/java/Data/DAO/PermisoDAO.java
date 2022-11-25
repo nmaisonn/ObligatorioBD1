@@ -20,7 +20,7 @@ public class PermisoDAO {
     
     public static PermisoModelo updatePermisoRechazado(int userId, int rolNegId, int appId) throws SQLException {
         PermisoModelo xPermiso = null;
-        String sql = "update Permisos set Estado='rechazado' where user_id=" + userId + " rol_neg_id=" + rolNegId + "app_id=" + appId;
+        String sql = "update Permisos set estado='rechazado' where user_id=" + userId + " rol_neg_id=" + rolNegId + "app_id=" + appId;
         Conexion xConexion = Conexion.GetInstance();
         PreparedStatement stmt = xConexion.conn.prepareStatement(sql);
         

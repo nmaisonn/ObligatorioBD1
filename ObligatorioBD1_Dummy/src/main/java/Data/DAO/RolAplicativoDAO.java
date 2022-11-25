@@ -22,7 +22,7 @@ public class RolAplicativoDAO {
         RolAplicativoModelo xRol = null;
         String id = Integer.toString(appIdBD);
         String idRol = Integer.toString(rolIdBD);
-        String sql = "select * from Roles_Aplicativos where app_id=" + id + "and rol_id=" + idRol; //cambiar
+        String sql = "select * from Roles_Aplicativos where app_id=" + id + " and rol_id=" + idRol; //cambiar
         Conexion xConexion = Conexion.GetInstance();
         Statement stmt = xConexion.conn.createStatement();
         try {
@@ -30,7 +30,7 @@ public class RolAplicativoDAO {
             while (rs.next()) {
                 int appId = Integer.parseInt(rs.getString(1));
                 int rolAppId = Integer.parseInt(rs.getString(2));
-                String descripcion = rs.getDate(4).toString();
+                String descripcion = rs.getString(3);
                 xRol = new RolAplicativoModelo( appId, rolAppId, descripcion);
             }
         } catch (SQLException e) {

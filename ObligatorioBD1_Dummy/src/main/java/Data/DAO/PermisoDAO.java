@@ -54,13 +54,14 @@ public class PermisoDAO {
     public static int[] getAppIdByUserId(int userId) throws SQLException {
         LinkedList<Integer> xPermisos = new LinkedList();
         String id = Integer.toString(userId);
-        String sql = "select app_id From Permisos where user_id=" + id;
+        String sql = "select app_id From Permisos where user_id=" + id + " AND estado='Aprobado'"; //traigo el rol_neg id??
         Conexion xConexion = Conexion.GetInstance();
         Statement stmt = xConexion.conn.createStatement();
         try {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Integer appId = Integer.parseInt(rs.getString(1));
+                //Integer rolNegId = Integer.parseInt(rs.getString(2));
                 xPermisos.add(appId);
                 
             }
@@ -74,6 +75,25 @@ public class PermisoDAO {
             i++;
         }
         return xRetorno;
+    };
+    
+    public static int getRolNegIdByIds(int puserId, int pappId) throws SQLException {
+        int rolNegId= 0;
+        String u = Integer.toString(puserId);
+        String a = Integer.toString(pappId);
+        String sql = "select rol_neg_id From Permisos where user_id=" + u + " AND app_id=" + a; //traigo el rol_neg id??
+        Conexion xConexion = Conexion.GetInstance();
+        Statement stmt = xConexion.conn.createStatement();
+        try {
+            ResultSet rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                rolNegId = Integer.parseInt(rs.getString(1));
+                
+            }
+        } catch (SQLException e) {
+            throw new Error("Problem", e);
+        }
+        return rolNegId;
     };
     
     

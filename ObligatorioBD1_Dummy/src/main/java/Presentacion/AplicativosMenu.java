@@ -8,6 +8,7 @@ import Negocio.DTOS.AplicativoDTO;
 import Negocio.DTOS.RolAplicativoDTO;
 import Negocio.DTOS.RolNegocioAplicativoDTO;
 import Negocio.Servicios.AplicativoServicio;
+import Negocio.Servicios.PermisoServicio;
 import Negocio.Servicios.RolAplicativoServicio;
 import Negocio.Servicios.RolNegocioAplicativoServicio;
 import javax.swing.table.DefaultTableModel;
@@ -22,12 +23,14 @@ static DefaultTableModel modeloAplicativos;
 static DefaultTableModel modeloRolesAplicativos;
 
 public AplicativoDTO[] aplicativos;
+public String appNombre;
     /**
      * Creates new form AplicativosMenu
      */
     public AplicativosMenu() {
         initComponents();
         setearModeloTablaAplicativos();
+        
     }
 
     /**
@@ -58,13 +61,13 @@ public AplicativoDTO[] aplicativos;
 
         tablaRolesAplicativos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-                "Funciones del Rol"
+                "Rol", "Funciones"
             }
         ));
         jScrollPane1.setViewportView(tablaRolesAplicativos);
@@ -160,15 +163,20 @@ public AplicativoDTO[] aplicativos;
     }// </editor-fold>//GEN-END:initComponents
 
     private void IrBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IrBotonActionPerformed
-        String app = tablaAplicativos.getValueAt(tablaAplicativos.getSelectedRow(), 0).toString();
-        FuncionesRol.setVisible(true);
+        this.appNombre = tablaAplicativos.getValueAt(tablaAplicativos.getSelectedRow(), 0).toString();
+        new RolesAplicativosMenu(this.appNombre, this.aplicativos).setVisible(true);
+    //FuncionesRol.setVisible(true);
+        
+       
     }//GEN-LAST:event_IrBotonActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        cargarTablaAplicativos();
+      cargarTablaAplicativos();
     }//GEN-LAST:event_formWindowOpened
 
     private void FuncionesRolWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_FuncionesRolWindowOpened
+      //setearModeloTablaRolesAplicativos();
+        
         cargarTablaRolesAplicativo();
         
     }//GEN-LAST:event_FuncionesRolWindowOpened
@@ -212,7 +220,7 @@ public AplicativoDTO[] aplicativos;
         });
     }
      private void cargarTablaAplicativos(){
-        AplicativoDTO [] aplicativos = AplicativoServicio.getAplicativos(123); //ide user
+        this.aplicativos = AplicativoServicio.getAplicativos(123); //ide user
         
          for(AplicativoDTO p: aplicativos){
              
@@ -226,8 +234,12 @@ public AplicativoDTO[] aplicativos;
 
     }
     private void cargarTablaRolesAplicativo(){
-        nombreAplicacion.setText("");
-        RolNegocioAplicativoDTO[] rolesNeg = RolNegocioAplicativoServicio.getRolesNegocioAplicativoByIds(0, 1); //id user y id app
+
+        nombreAplicacion.setText(this.appNombre);
+        int idApp = this.getAplicativoIdByName(appNombre);
+        int rolNegId= PermisoServicio.getRolNegIdByIds(123, idApp);
+        
+        RolNegocioAplicativoDTO[] rolesNeg = RolNegocioAplicativoServicio.getRolesNegocioAplicativoByIds(rolNegId, idApp); //id user y id app
         RolAplicativoDTO []  roles = new RolAplicativoDTO[rolesNeg.length];
         int i = 0;
         for(RolNegocioAplicativoDTO rol : rolesNeg){
@@ -242,7 +254,7 @@ public AplicativoDTO[] aplicativos;
            //texto[1] = String.valueOf(p.RolId);
            texto[0] = String.valueOf(p.Descripcion);
 
-           modeloAplicativos.addRow(texto); 
+           modeloRolesAplicativos.addRow(texto); 
         };
 
     }
@@ -252,22 +264,31 @@ public AplicativoDTO[] aplicativos;
         modeloAplicativos.addColumn("Nombre aplicación");
        
 
-        //modeloProcesos.addColumn("RAM (MB)");
+        
         this.tablaAplicativos.setModel(modeloAplicativos);
         this.tablaAplicativos.setCellSelectionEnabled(false);
         this.tablaAplicativos.setRowSelectionAllowed(true);
         
     }
+    
     private void setearModeloTablaRolesAplicativos() {
         modeloRolesAplicativos = new DefaultTableModel();
+        modeloRolesAplicativos.addColumn("Rol");
         modeloRolesAplicativos.addColumn("Funciones");
        
 
-        //modeloProcesos.addColumn("RAM (MB)");
         this.tablaRolesAplicativos.setModel(modeloRolesAplicativos);
         this.tablaRolesAplicativos.setCellSelectionEnabled(false);
-        this.tablaRolesAplicativos.setRowSelectionAllowed(true);
-        
+        this.tablaRolesAplicativos.setRowSelectionAllowed(true);    
+    }
+    
+    private int getAplicativoIdByName(String nombre){
+        for(AplicativoDTO x :this.aplicativos){
+            if(x.NombreApp.equals(nombre)){
+                return x.AppId;
+            }
+        }
+        return 0;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
