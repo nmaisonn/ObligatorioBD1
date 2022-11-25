@@ -17,7 +17,7 @@ public class AplicativoServicio {
     
     public static AplicativoDTO[] getAplicativos(int id) {
         try{
-            int [] appIds = PermisoServicio.getAppIdByUserId(0);
+            int [] appIds = PermisoServicio.getAppIdByUserId(id);
             AplicativoModelo[] xAplicativosBD = new AplicativoModelo[appIds.length];
             int i = 0;
             for (int x: appIds){

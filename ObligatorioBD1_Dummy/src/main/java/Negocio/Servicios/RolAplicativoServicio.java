@@ -15,20 +15,15 @@ import java.sql.SQLException;
  */
 public class RolAplicativoServicio {
     
-    public static RolAplicativoDTO[] getRolesAplicativos(int id) {
+    public static RolAplicativoDTO getRolAplicativo(int idApp, int idRol) {
         try{
-            RolAplicativoModelo[] xRolesAplicativosBD = RolAplicativoDAO.getRoles(id);
-            RolAplicativoDTO[] xRolesAplicativos = null;
-            if (xRolesAplicativosBD != null) {
-                xRolesAplicativos = new RolAplicativoDTO[xRolesAplicativosBD.length];
-                int i = 0;
-                for (RolAplicativoModelo x : xRolesAplicativosBD) {
-                    RolAplicativoDTO xRolAplicativo = new RolAplicativoDTO(x.AppId,x.RolId,x.Descripcion);
-                    xRolesAplicativos[i] = xRolAplicativo;
-                    i++;
-                }
+            RolAplicativoModelo xRolAplicativoBD = RolAplicativoDAO.getRolAplicativo(idApp,  idRol);
+            RolAplicativoDTO xRolAplicativo = null;
+            if (xRolAplicativoBD != null) {
+                xRolAplicativo = new RolAplicativoDTO(xRolAplicativoBD.AppId, xRolAplicativoBD.RolId, xRolAplicativoBD.Descripcion);
+    
             }
-            return xRolesAplicativos;
+            return xRolAplicativo;
         }
         catch (SQLException e) {
             throw new Error("Problem", e);

@@ -5,9 +5,9 @@
 package Presentacion;
 
 import Negocio.DTOS.AplicativoDTO;
-import Negocio.DTOS.RolAplicativoDTO;
+
 import Negocio.Servicios.AplicativoServicio;
-import Negocio.Servicios.RolAplicativoServicio;
+
 import javax.swing.table.DefaultTableModel;
 
 
@@ -17,15 +17,17 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AplicativosMenu extends javax.swing.JFrame {
 static DefaultTableModel modeloAplicativos;
-static DefaultTableModel modeloRolesAplicativos;
+
 
 public AplicativoDTO[] aplicativos;
+public String appNombre;
     /**
      * Creates new form AplicativosMenu
      */
     public AplicativosMenu() {
         initComponents();
         setearModeloTablaAplicativos();
+        
     }
 
     /**
@@ -37,72 +39,9 @@ public AplicativoDTO[] aplicativos;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        FuncionesRol = new javax.swing.JFrame();
-        nombreAplicacion = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablaRolesAplicativos = new javax.swing.JTable();
-        BackBoton = new javax.swing.JButton();
         IrBoton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaAplicativos = new javax.swing.JTable();
-
-        FuncionesRol.addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                FuncionesRolWindowOpened(evt);
-            }
-        });
-
-        nombreAplicacion.setText("jLabel1");
-
-        tablaRolesAplicativos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
-            },
-            new String [] {
-                "Funciones del Rol"
-            }
-        ));
-        jScrollPane1.setViewportView(tablaRolesAplicativos);
-
-        BackBoton.setText("Back");
-        BackBoton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BackBotonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout FuncionesRolLayout = new javax.swing.GroupLayout(FuncionesRol.getContentPane());
-        FuncionesRol.getContentPane().setLayout(FuncionesRolLayout);
-        FuncionesRolLayout.setHorizontalGroup(
-            FuncionesRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FuncionesRolLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(BackBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60))
-            .addGroup(FuncionesRolLayout.createSequentialGroup()
-                .addGroup(FuncionesRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(FuncionesRolLayout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(FuncionesRolLayout.createSequentialGroup()
-                        .addGap(231, 231, 231)
-                        .addComponent(nombreAplicacion)))
-                .addContainerGap(142, Short.MAX_VALUE))
-        );
-        FuncionesRolLayout.setVerticalGroup(
-            FuncionesRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(FuncionesRolLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(nombreAplicacion)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
-                .addComponent(BackBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -126,7 +65,7 @@ public AplicativoDTO[] aplicativos;
                 {null}
             },
             new String [] {
-                "Nombre Aplicacion"
+                "Aplicaciones"
             }
         ));
         jScrollPane2.setViewportView(tablaAplicativos);
@@ -158,22 +97,16 @@ public AplicativoDTO[] aplicativos;
     }// </editor-fold>//GEN-END:initComponents
 
     private void IrBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IrBotonActionPerformed
-        String app = tablaAplicativos.getValueAt(tablaAplicativos.getSelectedRow(), 0).toString();
-        FuncionesRol.setVisible(true);
+        this.appNombre = tablaAplicativos.getValueAt(tablaAplicativos.getSelectedRow(), 0).toString();
+        new RolesAplicativosMenu(this.appNombre, this.aplicativos).setVisible(true);
+    //FuncionesRol.setVisible(true);
+        
+       
     }//GEN-LAST:event_IrBotonActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        cargarTablaAplicativos();
+      cargarTablaAplicativos();
     }//GEN-LAST:event_formWindowOpened
-
-    private void FuncionesRolWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_FuncionesRolWindowOpened
-        nombreAplicacion.setText("");
-        RolAplicativoServicio.getRolesAplicativos(0); // id app
-    }//GEN-LAST:event_FuncionesRolWindowOpened
-
-    private void BackBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBotonActionPerformed
-       FuncionesRol.setVisible(false);
-    }//GEN-LAST:event_BackBotonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -210,65 +143,37 @@ public AplicativoDTO[] aplicativos;
         });
     }
      private void cargarTablaAplicativos(){
-        AplicativoDTO [] aplicativos = AplicativoServicio.getAplicativos(0); //ide user
+        this.aplicativos = AplicativoServicio.getAplicativos(123); //ide user
         
          for(AplicativoDTO p: aplicativos){
              
             String[] texto = new String[5];
-            texto[0] = String.valueOf(p.AppId);
-            texto[1] = String.valueOf(p.NombreApp);
+            //texto[0] = String.valueOf(p.AppId);
+            texto[0] = String.valueOf(p.NombreApp);
   
             
             modeloAplicativos.addRow(texto); 
-          };
+          }
 
     }
-    private void cargarTablaRolesAplicativo(){
-        RolAplicativoDTO []rolesAplicativos = RolAplicativoServicio.getRolesAplicativos(0); //ide user
-        
-        for(RolAplicativoDTO p: rolesAplicativos){
-
-           String[] texto = new String[1];
-           //texto[0] = String.valueOf(p.AppId);
-           //texto[1] = String.valueOf(p.RolId);
-           texto[2] = String.valueOf(p.Descripcion);
-
-           modeloAplicativos.addRow(texto); 
-        };
-
-    }
+    
      
     private void setearModeloTablaAplicativos() {
         modeloAplicativos = new DefaultTableModel();
         modeloAplicativos.addColumn("Nombre aplicación");
        
 
-        //modeloProcesos.addColumn("RAM (MB)");
+        
         this.tablaAplicativos.setModel(modeloAplicativos);
         this.tablaAplicativos.setCellSelectionEnabled(false);
         this.tablaAplicativos.setRowSelectionAllowed(true);
         
     }
-    private void setearModeloTablaRolesAplicativos() {
-        modeloRolesAplicativos = new DefaultTableModel();
-        modeloRolesAplicativos.addColumn("Funciones");
-       
-
-        //modeloProcesos.addColumn("RAM (MB)");
-        this.tablaRolesAplicativos.setModel(modeloRolesAplicativos);
-        this.tablaRolesAplicativos.setCellSelectionEnabled(false);
-        this.tablaRolesAplicativos.setRowSelectionAllowed(true);
-        
-    }
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BackBoton;
-    private javax.swing.JFrame FuncionesRol;
     private javax.swing.JButton IrBoton;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel nombreAplicacion;
     private javax.swing.JTable tablaAplicativos;
-    private javax.swing.JTable tablaRolesAplicativos;
     // End of variables declaration//GEN-END:variables
 }
