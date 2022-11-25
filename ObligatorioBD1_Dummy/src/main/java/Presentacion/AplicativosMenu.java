@@ -5,12 +5,9 @@
 package Presentacion;
 
 import Negocio.DTOS.AplicativoDTO;
-import Negocio.DTOS.RolAplicativoDTO;
-import Negocio.DTOS.RolNegocioAplicativoDTO;
+
 import Negocio.Servicios.AplicativoServicio;
-import Negocio.Servicios.PermisoServicio;
-import Negocio.Servicios.RolAplicativoServicio;
-import Negocio.Servicios.RolNegocioAplicativoServicio;
+
 import javax.swing.table.DefaultTableModel;
 
 
@@ -20,7 +17,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class AplicativosMenu extends javax.swing.JFrame {
 static DefaultTableModel modeloAplicativos;
-static DefaultTableModel modeloRolesAplicativos;
+
 
 public AplicativoDTO[] aplicativos;
 public String appNombre;
@@ -42,72 +39,9 @@ public String appNombre;
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        FuncionesRol = new javax.swing.JFrame();
-        nombreAplicacion = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablaRolesAplicativos = new javax.swing.JTable();
-        BackBoton = new javax.swing.JButton();
         IrBoton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaAplicativos = new javax.swing.JTable();
-
-        FuncionesRol.addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowOpened(java.awt.event.WindowEvent evt) {
-                FuncionesRolWindowOpened(evt);
-            }
-        });
-
-        nombreAplicacion.setText("jLabel1");
-
-        tablaRolesAplicativos.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
-            },
-            new String [] {
-                "Rol", "Funciones"
-            }
-        ));
-        jScrollPane1.setViewportView(tablaRolesAplicativos);
-
-        BackBoton.setText("Back");
-        BackBoton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BackBotonActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout FuncionesRolLayout = new javax.swing.GroupLayout(FuncionesRol.getContentPane());
-        FuncionesRol.getContentPane().setLayout(FuncionesRolLayout);
-        FuncionesRolLayout.setHorizontalGroup(
-            FuncionesRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, FuncionesRolLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(BackBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60))
-            .addGroup(FuncionesRolLayout.createSequentialGroup()
-                .addGroup(FuncionesRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(FuncionesRolLayout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(FuncionesRolLayout.createSequentialGroup()
-                        .addGap(153, 153, 153)
-                        .addComponent(nombreAplicacion)))
-                .addContainerGap(298, Short.MAX_VALUE))
-        );
-        FuncionesRolLayout.setVerticalGroup(
-            FuncionesRolLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(FuncionesRolLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(nombreAplicacion)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43)
-                .addComponent(BackBoton, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(27, Short.MAX_VALUE))
-        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -131,7 +65,7 @@ public String appNombre;
                 {null}
             },
             new String [] {
-                "Nombre Aplicacion"
+                "Aplicaciones"
             }
         ));
         jScrollPane2.setViewportView(tablaAplicativos);
@@ -173,17 +107,6 @@ public String appNombre;
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
       cargarTablaAplicativos();
     }//GEN-LAST:event_formWindowOpened
-
-    private void FuncionesRolWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_FuncionesRolWindowOpened
-      //setearModeloTablaRolesAplicativos();
-        
-        cargarTablaRolesAplicativo();
-        
-    }//GEN-LAST:event_FuncionesRolWindowOpened
-
-    private void BackBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBotonActionPerformed
-       FuncionesRol.setVisible(false);
-    }//GEN-LAST:event_BackBotonActionPerformed
 
     /**
      * @param args the command line arguments
@@ -230,34 +153,10 @@ public String appNombre;
   
             
             modeloAplicativos.addRow(texto); 
-          };
+          }
 
     }
-    private void cargarTablaRolesAplicativo(){
-
-        nombreAplicacion.setText(this.appNombre);
-        int idApp = this.getAplicativoIdByName(appNombre);
-        int rolNegId= PermisoServicio.getRolNegIdByIds(123, idApp);
-        
-        RolNegocioAplicativoDTO[] rolesNeg = RolNegocioAplicativoServicio.getRolesNegocioAplicativoByIds(rolNegId, idApp); //id user y id app
-        RolAplicativoDTO []  roles = new RolAplicativoDTO[rolesNeg.length];
-        int i = 0;
-        for(RolNegocioAplicativoDTO rol : rolesNeg){
-            roles[i] = RolAplicativoServicio.getRolAplicativo(rol.AppId, rol.RolId );// id app
-            i++;
-        }
-        
-        for(RolAplicativoDTO p: roles){
-
-           String[] texto = new String[1];
-           //texto[0] = String.valueOf(p.AppId);
-           //texto[1] = String.valueOf(p.RolId);
-           texto[0] = String.valueOf(p.Descripcion);
-
-           modeloRolesAplicativos.addRow(texto); 
-        };
-
-    }
+    
      
     private void setearModeloTablaAplicativos() {
         modeloAplicativos = new DefaultTableModel();
@@ -270,35 +169,11 @@ public String appNombre;
         this.tablaAplicativos.setRowSelectionAllowed(true);
         
     }
-    
-    private void setearModeloTablaRolesAplicativos() {
-        modeloRolesAplicativos = new DefaultTableModel();
-        modeloRolesAplicativos.addColumn("Rol");
-        modeloRolesAplicativos.addColumn("Funciones");
-       
-
-        this.tablaRolesAplicativos.setModel(modeloRolesAplicativos);
-        this.tablaRolesAplicativos.setCellSelectionEnabled(false);
-        this.tablaRolesAplicativos.setRowSelectionAllowed(true);    
-    }
-    
-    private int getAplicativoIdByName(String nombre){
-        for(AplicativoDTO x :this.aplicativos){
-            if(x.NombreApp.equals(nombre)){
-                return x.AppId;
-            }
-        }
-        return 0;
-    }
+ 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton BackBoton;
-    private javax.swing.JFrame FuncionesRol;
     private javax.swing.JButton IrBoton;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel nombreAplicacion;
     private javax.swing.JTable tablaAplicativos;
-    private javax.swing.JTable tablaRolesAplicativos;
     // End of variables declaration//GEN-END:variables
 }

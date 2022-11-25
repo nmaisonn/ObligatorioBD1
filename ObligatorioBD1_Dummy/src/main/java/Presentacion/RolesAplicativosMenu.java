@@ -14,7 +14,6 @@ import Negocio.Servicios.PermisoServicio;
 import Negocio.Servicios.RolAplicativoMenuServicio;
 import Negocio.Servicios.RolAplicativoServicio;
 import Negocio.Servicios.RolNegocioAplicativoServicio;
-import static Presentacion.AplicativosMenu.modeloRolesAplicativos;
 import javax.swing.table.DefaultTableModel;
 
 /**
