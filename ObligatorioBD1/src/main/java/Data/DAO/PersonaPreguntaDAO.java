@@ -19,15 +19,15 @@ import java.sql.Statement;
  * @author nmais
  */
 public class PersonaPreguntaDAO {
-    public static void crearPersonaPregunta(PersonaPreguntaModel pPersonaPregunta) throws SQLException {
+    public static void crearPersonaPregunta(int pUserId, int pPregId, String pRespuesta) throws SQLException {
         String sql = "insert into Personas_Preguntas (user_id,preg_id,respuesta)"
                 + " Values (?,?,?)";
         Conexion xConexion = Conexion.GetInstance();
         PreparedStatement stmt = xConexion.conn.prepareStatement(sql);
         try {
-            stmt.setInt(1, pPersonaPregunta.UserId);
-            stmt.setInt(2, pPersonaPregunta.PregId);
-            stmt.setString(3, pPersonaPregunta.Respuesta);
+            stmt.setInt(1, pUserId);
+            stmt.setInt(2, pPregId);
+            stmt.setString(3, pRespuesta);
             int cont = stmt.executeUpdate();
         } catch (SQLException e) {
             throw new Error("Problem", e);
