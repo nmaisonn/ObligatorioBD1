@@ -56,4 +56,20 @@ public class PermisoServicio {
             throw new Error("Problem", e);
         }
     }
+     
+    public static int getRolNegIdByIds(int userId, int appId){
+        try{
+            int xRolNegIdBD = 0;
+            xRolNegIdBD = PermisoDAO.getRolNegIdByIds(userId, appId);
+            if (xRolNegIdBD != 0) {
+                return xRolNegIdBD;
+            }
+            return 0;
+
+        }
+        catch (SQLException e) {
+            throw new Error("Problem", e);
+        }
+    }
+    
 }

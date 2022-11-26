@@ -67,7 +67,7 @@ public class PreguntaDAO {
         PreparedStatement stmt = xConexion.conn.prepareStatement(sql);
         try {
             stmt.setInt(1, pregId);
-            ResultSet rs = stmt.executeQuery(sql);
+            ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 preg = new PreguntaModel(Integer.parseInt(rs.getString(1)), rs.getString(2));
             }

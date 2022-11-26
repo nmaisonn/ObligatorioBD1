@@ -4,22 +4,22 @@
  */
 package Data.DAO;
 
-import Data.Modelos.AplicativoModelo;
+import Data.Modelos.RolAplicativoMenuModelo;
 import Recursos.Conexion;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.LinkedList;
 
 /**
  *
  * @author prueba
  */
-public class AplicativoDAO {
-    public static AplicativoModelo getAplicativo(int id) throws SQLException {
-        AplicativoModelo xAplicativo = null;
-        String x = Integer.toString(id);
-        String sql = "select * from Aplicativos where app_id=" + x;
+public class RolAplicativoMenuDAO {
+    public static RolAplicativoMenuModelo getRolAplicativoMenu(int pappId, int prolId) throws SQLException {
+       RolAplicativoMenuModelo xRolAppMenu = null;
+        String x = Integer.toString(pappId);
+        String p = Integer.toString(prolId);
+        String sql = "select * from Roles_Aplicativos_Menu where app_id=" + x + " AND rol_id=" + p;
  
         Conexion xConexion = Conexion.GetInstance();
         Statement stmt = xConexion.conn.createStatement();
@@ -27,14 +27,15 @@ public class AplicativoDAO {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 int appId = Integer.parseInt(rs.getString(1));
-                String nombreApp = rs.getString(2);
+                int rolId = Integer.parseInt(rs.getString(2));
+                int menuId = Integer.parseInt(rs.getString(3));
             
-                xAplicativo = new AplicativoModelo(appId, nombreApp);
+                xRolAppMenu = new RolAplicativoMenuModelo(appId,rolId, menuId);
             }
         } catch (SQLException e) {
             throw new Error("Problem", e);
         }
         
-        return xAplicativo; 
+        return xRolAppMenu;  
     }
 }
