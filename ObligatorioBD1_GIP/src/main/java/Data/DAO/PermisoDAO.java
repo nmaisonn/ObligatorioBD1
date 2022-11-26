@@ -21,7 +21,7 @@ public class PermisoDAO {
     public static void updatePermisoRechazado(int userId, int rolNegId, int appId) throws SQLException {
         String fecha = java.time.LocalDateTime.now().toString().split("T")[0];
         String sql = "update Permisos set Estado='rechazado' where user_id=" + userId + " rol_neg_id=" + rolNegId + "app_id=" + appId;
-        String sql = "update Permisos set Estado="+estado+", Fecha_Autorizacion="+fecha+" where user_id="+userId+" and app_id="+appId+" and rol_neg_id="+rolNegId;
+        //String sql = "update Permisos set Estado="+estado+", Fecha_Autorizacion="+fecha+" where user_id="+userId+" and app_id="+appId+" and rol_neg_id="+rolNegId;
 
         Conexion xConexion = Conexion.GetInstance();
         Statement stmt = xConexion.conn.createStatement();

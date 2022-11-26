@@ -39,7 +39,7 @@ public class PermisoServicio {
         }
     }
 
-    public static PermisoDTO[] getPermisos() {
+    public static PermisoDTO[] getPermisos() throws SQLException {
         try {
             PermisoModelo[] xPermisosBD = PermisoDAO.getPermisos();
             PermisoDTO[] xPermisos = null;

@@ -109,8 +109,12 @@ public class Gestion extends javax.swing.JFrame {
         int rol = Integer.parseInt(tablaPermisos.getValueAt(tablaPermisos.getSelectedRow(), 1).toString());
         int app = Integer.parseInt(tablaPermisos.getValueAt(tablaPermisos.getSelectedRow(), 2).toString());
         PermisoDTO permiso = PermisoServicio.updatePermisoAceptado(cedula, rol, app);
-        //vaciar tabla
-        cargarTabla();
+        try {
+            //vaciar tabla
+            cargarTabla();
+        } catch (SQLException ex) {
+            Logger.getLogger(Gestion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_AceptarActionPerformed
 
     private void RechazarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RechazarActionPerformed
@@ -129,12 +133,20 @@ public class Gestion extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(Gestion.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //vaciar tabla
-        cargarTabla();
+        try {
+            //vaciar tabla
+            cargarTabla();
+        } catch (SQLException ex) {
+            Logger.getLogger(Gestion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_RechazarActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        cargarTabla();
+        try {
+            cargarTabla();
+        } catch (SQLException ex) {
+            Logger.getLogger(Gestion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_formWindowOpened
 
     /**
@@ -173,7 +185,7 @@ public class Gestion extends javax.swing.JFrame {
 
     }
 
-    private void cargarTabla() {
+    private void cargarTabla() throws SQLException {
         PermisoDTO[] permisos = PermisoServicio.getPermisos();
 
         for (PermisoDTO p : permisos) {
