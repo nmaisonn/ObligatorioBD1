@@ -338,6 +338,10 @@ public class Login extends javax.swing.JFrame {
             PersonaDTO xPersona = new PersonaDTO(Integer.parseInt(ciUser.getText()), "", "", "", "", "", Hashing.DoHash(pass1.getText()));
             try {
                 PersonaServicio.changePassword(xPersona);
+                JOptionPane.showMessageDialog(null, "Contraseña cambiada con exito!");
+                pass1.setText("");
+                pass2.setText("");
+                ventanaRecuperar3.setVisible(false);
             } catch (SQLException ex) {
             }
 
