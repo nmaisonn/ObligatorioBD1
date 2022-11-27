@@ -276,6 +276,7 @@ public class Registro extends javax.swing.JFrame {
                     PermisoServicio.crearSolicitud(xSolicitud);
                     JOptionPane.showMessageDialog(null, "Se agrego la persona correctamente");
                     this.setVisible(false);
+                    new Login().setVisible(true);
                 } catch (SQLException e) {
                     JOptionPane.showMessageDialog(null, "Hubo un error al agregar a la persona");
                     throw new Error("Problem", e);

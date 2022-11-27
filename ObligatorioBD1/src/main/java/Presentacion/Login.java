@@ -62,6 +62,7 @@ public class Login extends javax.swing.JFrame {
         txtContraseña = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
         btnIngresar = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         jLabel5.setText("Recuperar contraseña");
 
@@ -225,6 +226,13 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+        jButton4.setText("Solicitar Acceso");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -245,6 +253,8 @@ public class Login extends javax.swing.JFrame {
                                 .addComponent(jLabel4)))
                         .addGap(118, 118, 118))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton4)
+                        .addGap(37, 37, 37)
                         .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(70, 70, 70))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -267,7 +277,9 @@ public class Login extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
                 .addGap(40, 40, 40)
-                .addComponent(btnIngresar, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnIngresar, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(27, 27, 27))
         );
 
@@ -368,6 +380,29 @@ public class Login extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        int xCi = Integer.parseInt(txtCI.getText());
+        PersonaDTO xPersona = PersonaServicio.getPersonaByUserId(xCi);
+        if (xPersona != null) {
+            try {
+                if (xPersona.Password.equals(Hashing.DoHash(txtContraseña.getText()))) {
+                    this.setVisible(false);
+                    new SolicitudPermiso(xCi).setVisible(true);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al logear!");
+                    txtCI.setText("");
+                    txtContraseña.setText("");
+                }
+            } catch (Error e) {
+                System.out.println(e);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al logear!");
+            txtCI.setText("");
+            txtContraseña.setText("");
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -409,6 +444,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
