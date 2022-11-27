@@ -117,7 +117,7 @@ public class RolesAplicativosMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBotonActionPerformed
-        new AplicativosMenu().setVisible(true);
+        //new AplicativosMenu().setVisible(true);
     }//GEN-LAST:event_BackBotonActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened

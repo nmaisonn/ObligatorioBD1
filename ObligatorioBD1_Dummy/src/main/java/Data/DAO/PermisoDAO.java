@@ -54,14 +54,13 @@ public class PermisoDAO {
     public static int[] getAppIdByUserId(int userId) throws SQLException {
         LinkedList<Integer> xPermisos = new LinkedList();
         String id = Integer.toString(userId);
-        String sql = "select app_id From Permisos where user_id=" + id + " AND estado='Aprobado'"; //traigo el rol_neg id??
+        String sql = "select app_id From Permisos where user_id=" + id + " and estado= 'Aprobado'"; 
         Conexion xConexion = Conexion.GetInstance();
         Statement stmt = xConexion.conn.createStatement();
         try {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Integer appId = Integer.parseInt(rs.getString(1));
-                //Integer rolNegId = Integer.parseInt(rs.getString(2));
                 xPermisos.add(appId);
                 
             }

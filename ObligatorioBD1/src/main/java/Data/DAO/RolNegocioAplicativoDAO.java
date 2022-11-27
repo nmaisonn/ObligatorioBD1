@@ -19,14 +19,14 @@ public class RolNegocioAplicativoDAO {
 
     public static RolNegocioAplicativoModel[] getRolNegocioAplicativoByAppId(int pAppId) throws SQLException {
         LinkedList<RolNegocioAplicativoModel> xRolNegocioAplicativoModels = new LinkedList();
-        String sql = "select * from Roles_Negocio_Aplicativos where app_id=?";
+        String sql = "select rol_neg_id from Roles_Negocio_Aplicativos where app_id=? group by rol_neg_id";
         Conexion xConexion = Conexion.GetInstance();
         PreparedStatement stmt = xConexion.conn.prepareStatement(sql);
         try {
             stmt.setInt(1, pAppId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                xRolNegocioAplicativoModels.add(new RolNegocioAplicativoModel(Integer.parseInt(rs.getString(1)), Integer.parseInt(rs.getString(2)), Integer.parseInt(rs.getString(3))));
+                xRolNegocioAplicativoModels.add(new RolNegocioAplicativoModel(Integer.parseInt(rs.getString(1)), pAppId, 0));
             }
 
         } catch (SQLException e) {

@@ -13,8 +13,6 @@ import Negocio.Servicios.PreguntaServicio;
 import Recursos.Hashing;
 import java.awt.Dimension;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 /**
@@ -275,11 +273,14 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-        PersonaDTO xPersona = PersonaServicio.getPersonaByUserId(Integer.parseInt(txtCI.getText()));
+        int xCi =Integer.parseInt(txtCI.getText());
+        PersonaDTO xPersona = PersonaServicio.getPersonaByUserId(xCi);
         if (xPersona != null) {
             try {
                 if (xPersona.Password.equals(Hashing.DoHash(txtContraseña.getText()))) {
                     JOptionPane.showMessageDialog(null, "Logeado correctamente!");
+                    this.setVisible(false);
+                    new AplicativosMenu(xCi).setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Error al logear!");
                     txtCI.setText("");
