@@ -32,7 +32,7 @@ public class PermisoServicio {
             PermisoDAO.updatePermisoAceptado(cedulaId, rolId, appId);
             PermisoDTO perm = new PermisoDTO(cedulaId,
                     rolId, appId, null,
-                    null, "aprobado");
+                    null, "Aprobado");
             return perm;
         } catch (SQLException e) {
             throw new Error("Problem", e);

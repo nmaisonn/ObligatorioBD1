@@ -19,44 +19,43 @@ import java.util.LinkedList;
 public class PermisoDAO {
 
     public static void updatePermisoRechazado(int userId, int rolNegId, int appId) throws SQLException {
-        String fecha = java.time.LocalDateTime.now().toString().split("T")[0];
-        String sql = "update Permisos set estado= ? where user_id= ? and rol_neg_id= ? and app_id= ?";
-        //String sql = "update Permisos set Estado="+estado+", Fecha_Autorizacion="+fecha+" where user_id="+userId+" and app_id="+appId+" and rol_neg_id="+rolNegId;
+        String sql = "update Permisos set estado= ?, fecha_autorizacion=current_timestamp where user_id= ? and rol_neg_id= ? and app_id= ?";
 
         Conexion xConexion = Conexion.GetInstance();
         PreparedStatement stmt = xConexion.conn.prepareStatement(sql);
 
-        /*stmt.setString(1, fecha);
-        stmt.setInt(2, userId);
-        stmt.setInt(3, appId);
-        stmt.setInt(4, rolNegId);*/
         try {
-            stmt.setString(1, "rechazado");
+            stmt.setString(1,"Rechazado");
             stmt.setInt(2, userId);
             stmt.setInt(3, rolNegId);
             stmt.setInt(4, appId);
             int cont = stmt.executeUpdate();
-            //ResultSet rs = stmt.executeQuery(QUERY);
-
         } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Error("Problem", e);
+        } catch (Exception e){
+            e.printStackTrace();
             throw new Error("Problem", e);
         }
     }
 
     public static void updatePermisoAceptado(int userId, int rolNegId, int appId) throws SQLException {
-        String fecha = java.time.LocalDateTime.now().toString().split("T")[0];
-        String sql = "update Permisos set Estado=Aprobado, Fecha_Autorizacion=? where user_id=? and app_id=? and rol_neg_id=?";
+        String sql = "update Permisos set estado= ?, fecha_autorizacion=current_timestamp where user_id= ? and rol_neg_id= ? and app_id= ?";
 
         Conexion xConexion = Conexion.GetInstance();
         PreparedStatement stmt = xConexion.conn.prepareStatement(sql);
-        stmt.setString(1, fecha);
-        stmt.setInt(2, userId);
-        stmt.setInt(3, appId);
-        stmt.setInt(4, rolNegId);
-
+       
         try {
+            stmt.setString(1,"Aprobado");
+            stmt.setInt(2, userId);
+            stmt.setInt(3, rolNegId);
+            stmt.setInt(4, appId);
             int cont = stmt.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
+            throw new Error("Problem", e);
+        } catch (Exception e){
+            e.printStackTrace();
             throw new Error("Problem", e);
         }
     }
@@ -70,8 +69,8 @@ public class PermisoDAO {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 int userId = Integer.parseInt(rs.getString(1));
-                int rolNegId = Integer.parseInt(rs.getString(2));
-                int appId = Integer.parseInt(rs.getString(3));
+                int appId = Integer.parseInt(rs.getString(2));
+                int rolNegId = Integer.parseInt(rs.getString(3));
                 String fechaSoli = rs.getDate(4).toString();
                 String fechaAuto = null;
                 if (rs.getDate(5) != null) {
@@ -91,6 +90,4 @@ public class PermisoDAO {
         }
         return xRetorno;
     }
-;
-
 }
