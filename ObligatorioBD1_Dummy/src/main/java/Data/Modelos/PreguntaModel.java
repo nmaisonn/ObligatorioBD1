@@ -6,8 +6,15 @@ package Data.Modelos;
 
 /**
  *
- * @author prueba
+ * @author nmais
  */
-public class PersonaModelo {
-    
+public class PreguntaModel {
+    public int PregId;
+    public String Pregunta;
+
+
+    public PreguntaModel(int pPregId, String pPregunta) {
+        this.PregId = pPregId;
+        this.Pregunta = pPregunta;
+    }
 }

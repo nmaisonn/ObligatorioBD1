@@ -2,28 +2,32 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Negocio.DTOS;
+package Data.Modelos;
 
 /**
  *
  * @author nmais
  */
-public class PersonaDTO {
+public class PersonaModel {
+    
     public int UserId;
     public String Nombre;
     public String Apellido;
     public String Direccion;
     public String Ciudad;
     public String Departamento;
-    public String Password;
+    public String Hashpwd;
     
-    public PersonaDTO(int pUserId, String pNombre, String pApellido, String pDireccion, String pCiudad, String pDepartamento, String pPassword){
+    public PersonaModel(int pUserId, String pNombre, String pApellido, String pDireccion, String pCiudad, String pDepartamento, String pPassword){
     this.UserId = pUserId;
-    this.Nombre=pNombre;
-    this.Apellido=pApellido;
+    this.Nombre = pNombre;
+    this.Apellido = pApellido;
     this.Direccion = pDireccion;
     this.Ciudad = pCiudad;
-    this.Departamento=pDepartamento;
-    this.Password = pPassword;
+    this.Departamento = pDepartamento;
+    this.Hashpwd = pPassword;
     }
+    
+    
+    
 }

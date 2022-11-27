@@ -24,15 +24,17 @@ public class RolesAplicativosMenu extends javax.swing.JFrame {
     public  AplicativoDTO[] Aplicativos;
     public  String AppNombre;
     static DefaultTableModel modeloRolesAplicativos;
+    public int CiUserLogueado;
     /**
      * Creates new form RolesAplicativosMenu
      * @param appNombre
      * @param aplicativos
      */
-    public RolesAplicativosMenu(String appNombre, AplicativoDTO[] aplicativos) {
+    public RolesAplicativosMenu(String appNombre, AplicativoDTO[] aplicativos,int ciuserLogueado) {
         initComponents();
         this.AppNombre = appNombre;
         this.Aplicativos = aplicativos;
+        this.CiUserLogueado= ciuserLogueado;
         setearModeloTablaRolesAplicativos();
     }
 
@@ -117,7 +119,7 @@ public class RolesAplicativosMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBotonActionPerformed
-        new AplicativosMenu().setVisible(true);
+        new AplicativosMenu(this.CiUserLogueado).setVisible(true);
     }//GEN-LAST:event_BackBotonActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened

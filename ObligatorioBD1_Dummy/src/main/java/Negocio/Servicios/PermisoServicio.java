@@ -41,16 +41,7 @@ public class PermisoServicio {
      public static int[] getAppIdByUserId(int userId) throws SQLException {
           try{
             int[] xAppIdsBD = PermisoDAO.getAppIdByUserId(userId);
-            int[] xAppIds = null;
-            if (xAppIdsBD != null) {
-                xAppIds = new int[xAppIdsBD.length];
-                int i = 0;
-                for (int x : xAppIdsBD) {
-                    xAppIds[i] = x;
-                    i++;
-                }
-            }
-            return xAppIds;
+            return xAppIdsBD;
         }
         catch (SQLException e) {
             throw new Error("Problem", e);
@@ -64,7 +55,7 @@ public class PermisoServicio {
             if (xRolNegIdBD != 0) {
                 return xRolNegIdBD;
             }
-            return 0;
+            return xRolNegIdBD;
 
         }
         catch (SQLException e) {

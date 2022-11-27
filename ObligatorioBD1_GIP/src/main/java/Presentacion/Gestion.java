@@ -4,11 +4,16 @@
  */
 package Presentacion;
 
+import Negocio.DTOS.AplicativoDTO;
 import Negocio.DTOS.PermisoDTO;
+import Negocio.DTOS.RolNegocioDTO;
+import Negocio.Servicios.AplicativoServicio;
 import Negocio.Servicios.PermisoServicio;
+import Negocio.Servicios.RolNegocioServicio;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -107,10 +112,15 @@ public class Gestion extends javax.swing.JFrame {
     private void AceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AceptarActionPerformed
         int cedula = Integer.parseInt(tablaPermisos.getValueAt(tablaPermisos.getSelectedRow(), 0).toString());
         int rol = Integer.parseInt(tablaPermisos.getValueAt(tablaPermisos.getSelectedRow(), 1).toString());
-        int app = Integer.parseInt(tablaPermisos.getValueAt(tablaPermisos.getSelectedRow(), 2).toString());
+        int app = Integer.parseInt(tablaPermisos.getValueAt(tablaPermisos.getSelectedRow(), 3).toString());
         PermisoDTO permiso = PermisoServicio.updatePermisoAceptado(cedula, rol, app);
+        if (permiso != null) {
+            JOptionPane.showMessageDialog(null, "Se actualizo correctamente");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo actualizar");
+        }
         try {
-            //vaciar tabla
+            vaciarTabla();
             cargarTabla();
         } catch (SQLException ex) {
             Logger.getLogger(Gestion.class.getName()).log(Level.SEVERE, null, ex);
@@ -120,21 +130,14 @@ public class Gestion extends javax.swing.JFrame {
     private void RechazarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_RechazarActionPerformed
         int cedula = Integer.parseInt(tablaPermisos.getValueAt(tablaPermisos.getSelectedRow(), 0).toString());
         int rol = Integer.parseInt(tablaPermisos.getValueAt(tablaPermisos.getSelectedRow(), 1).toString());
-        int app = Integer.parseInt(tablaPermisos.getValueAt(tablaPermisos.getSelectedRow(), 2).toString());
+        int app = Integer.parseInt(tablaPermisos.getValueAt(tablaPermisos.getSelectedRow(), 3).toString());
         try {
             PermisoDTO permiso = PermisoServicio.updatePermisoRechazado(cedula, rol, app);
-
-            /* String permisoId = rows.toString();
-            System.out.print(permisoId);                            // ver esto como verga
-            // ver como hacer para que seleccione la id del permiso
-            PermisoDTO permiso = PermisoServicio.getPermisoById(Integer.parseInt(permisoId));
-            permiso.Estado = "rechazado";
-            //modeloPermisos.removeRow(rows[i]-i); se borra la row desp de rechazada o noo?*/
         } catch (SQLException ex) {
             Logger.getLogger(Gestion.class.getName()).log(Level.SEVERE, null, ex);
         }
         try {
-            //vaciar tabla
+            vaciarTabla();
             cargarTabla();
         } catch (SQLException ex) {
             Logger.getLogger(Gestion.class.getName()).log(Level.SEVERE, null, ex);
@@ -190,22 +193,32 @@ public class Gestion extends javax.swing.JFrame {
 
         for (PermisoDTO p : permisos) {
 
-            String[] texto = new String[4];
-
+            String[] texto = new String[6];
+            RolNegocioDTO rolNeg = RolNegocioServicio.getRolNegocioById(p.RolNegId);
+            AplicativoDTO app = AplicativoServicio.getAplicativoByAppId(p.AppId);
             texto[0] = String.valueOf(p.UserId);
             texto[1] = String.valueOf(p.RolNegId);
-            texto[2] = String.valueOf(p.AppId);
-            texto[3] = p.Estado;
-
+            texto[2] = String.valueOf(rolNeg.Descripcion);
+            texto[3] = String.valueOf(p.AppId);
+            texto[4] = String.valueOf(app.NombreApp);
+            texto[5] = p.Estado;
             modeloPermisos.addRow(texto);
         }
+    }
 
+    private void vaciarTabla() {
+        for (int i = 0; i < tablaPermisos.getRowCount(); i++) {
+            modeloPermisos.removeRow(i);
+            i -= 1;
+        }
     }
 
     private void setearModeloTablaPermisos() {
         modeloPermisos = new DefaultTableModel();
         modeloPermisos.addColumn("C.I");
+        modeloPermisos.addColumn("Id Rol");
         modeloPermisos.addColumn("Rol");
+        modeloPermisos.addColumn("Id Aplicativo");
         modeloPermisos.addColumn("Aplicativo");
         modeloPermisos.addColumn("Estado");
 

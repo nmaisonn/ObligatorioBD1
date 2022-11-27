@@ -10,24 +10,26 @@ import Negocio.Servicios.AplicativoServicio;
 
 import javax.swing.table.DefaultTableModel;
 
-
 /**
  *
  * @author prueba
  */
 public class AplicativosMenu extends javax.swing.JFrame {
-static DefaultTableModel modeloAplicativos;
 
+    static DefaultTableModel modeloAplicativos;
+    public int ciUserLogueado;
 
-public AplicativoDTO[] aplicativos;
-public String appNombre;
+    public AplicativoDTO[] aplicativos;
+    public String appNombre;
+
     /**
      * Creates new form AplicativosMenu
      */
-    public AplicativosMenu() {
+    public AplicativosMenu(int pCiUserLog) {
         initComponents();
+        this.ciUserLogueado=pCiUserLog;
         setearModeloTablaAplicativos();
-        
+
     }
 
     /**
@@ -98,14 +100,13 @@ public String appNombre;
 
     private void IrBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IrBotonActionPerformed
         this.appNombre = tablaAplicativos.getValueAt(tablaAplicativos.getSelectedRow(), 0).toString();
-        new RolesAplicativosMenu(this.appNombre, this.aplicativos).setVisible(true);
-    //FuncionesRol.setVisible(true);
-        
-       
+        new RolesAplicativosMenu(this.appNombre, this.aplicativos,this.ciUserLogueado).setVisible(true);
+
+
     }//GEN-LAST:event_IrBotonActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-      cargarTablaAplicativos();
+        cargarTablaAplicativos();
     }//GEN-LAST:event_formWindowOpened
 
     /**
@@ -138,38 +139,34 @@ public String appNombre;
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AplicativosMenu().setVisible(true);
             }
         });
     }
-     private void cargarTablaAplicativos(){
-        this.aplicativos = AplicativoServicio.getAplicativos(123); //ide user
-        
-         for(AplicativoDTO p: aplicativos){
-             
+
+    private void cargarTablaAplicativos() {
+        this.aplicativos = AplicativoServicio.getAppIdByUserId(ciUserLogueado); 
+
+        for (AplicativoDTO p : aplicativos) {
+
             String[] texto = new String[5];
             //texto[0] = String.valueOf(p.AppId);
             texto[0] = String.valueOf(p.NombreApp);
-  
-            
-            modeloAplicativos.addRow(texto); 
-          }
+
+            modeloAplicativos.addRow(texto);
+        }
 
     }
-    
-     
+
     private void setearModeloTablaAplicativos() {
         modeloAplicativos = new DefaultTableModel();
         modeloAplicativos.addColumn("Nombre aplicación");
-       
 
-        
         this.tablaAplicativos.setModel(modeloAplicativos);
         this.tablaAplicativos.setCellSelectionEnabled(false);
         this.tablaAplicativos.setRowSelectionAllowed(true);
-        
+
     }
- 
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton IrBoton;
