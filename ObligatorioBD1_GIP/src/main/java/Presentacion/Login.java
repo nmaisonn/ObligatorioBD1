@@ -33,6 +33,15 @@ public class Login extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
+<<<<<<< Updated upstream
+=======
+        btnIngresar = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
+
+        jLabel5.setText("Recuperar contraseña");
+
+        jLabel6.setText("CI");
+>>>>>>> Stashed changes
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -57,6 +66,23 @@ public class Login extends javax.swing.JFrame {
             }
         });
 
+<<<<<<< Updated upstream
+=======
+        btnIngresar.setText("Ingresar");
+        btnIngresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresarActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("jButton4");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
+
+>>>>>>> Stashed changes
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -66,8 +92,27 @@ public class Login extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtCI, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+<<<<<<< Updated upstream
                         .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(42, 42, 42))
+=======
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtCI, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(62, 62, 62)
+                                .addComponent(jLabel4)))
+                        .addGap(118, 118, 118))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton4)
+                        .addGap(68, 68, 68)
+                        .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(70, 70, 70))
+>>>>>>> Stashed changes
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -98,9 +143,20 @@ public class Login extends javax.swing.JFrame {
                 .addComponent(txtContraseña, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel4)
+<<<<<<< Updated upstream
                 .addGap(29, 29, 29)
                 .addComponent(btnIngresar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
+=======
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnIngresar, javax.swing.GroupLayout.DEFAULT_SIZE, 41, Short.MAX_VALUE)
+                        .addGap(27, 27, 27))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton4)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+>>>>>>> Stashed changes
         );
 
         pack();
@@ -132,6 +188,112 @@ public class Login extends javax.swing.JFrame {
        // ventanaRecuperar1.setVisible(true);
     }//GEN-LAST:event_jLabel4MouseClicked
 
+<<<<<<< Updated upstream
+=======
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        PersonaDTO xPersona = PersonaServicio.getPersonaByUserId(Integer.parseInt(ciUser.getText()));
+        if (xPersona != null) {
+            try {
+                PersonaPreguntaDTO persPreg = PersonaPreguntaServicio.getPersPregByUserId(xPersona.UserId);
+
+                PreguntaDTO preg = PreguntaServicio.getPregById(persPreg.PregId);
+
+                // Buscar pregunta y mostrarla
+                preguntaUser.setText(preg.Pregunta);
+                // Mostrar cosas
+                ventanaRecuperar1.setVisible(false);
+                ventanaRecuperar2.setMinimumSize(new Dimension(500, 359));
+                ventanaRecuperar2.setVisible(true);
+            } catch (Error e) {
+                System.out.println(e);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al recuperar la contraseña!");
+            ciUser.setText("");
+            ventanaRecuperar1.setVisible(false);
+        }
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+
+    }//GEN-LAST:event_jButton2MouseClicked
+
+    private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
+        // TODO add your handling code here:
+        if (pass1.getText().equals(pass2.getText())) {
+            PersonaDTO xPersona = new PersonaDTO(Integer.parseInt(ciUser.getText()), "", "", "", "", "", Hashing.DoHash(pass1.getText()));
+            try {
+                PersonaServicio.changePassword(xPersona);
+                JOptionPane.showMessageDialog(null, "Contraseña cambiada con exito!");
+                pass1.setText("");
+                pass2.setText("");
+                ventanaRecuperar3.setVisible(false);
+            } catch (SQLException ex) {
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al cambiar la contraseña!");
+            pass1.setText("");
+            pass2.setText("");
+            ventanaRecuperar3.setVisible(false);
+        }
+    }//GEN-LAST:event_jButton3MouseClicked
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        PersonaDTO xPersona = PersonaServicio.getPersonaByUserId(Integer.parseInt(ciUser.getText()));
+        PersonaPreguntaDTO persPreg = PersonaPreguntaServicio.getPersPregByUserId(xPersona.UserId);
+        if (persPreg.Respuesta.equals(respuestaUser.getText())) {
+            ventanaRecuperar2.setVisible(false);
+            ventanaRecuperar3.setMinimumSize(new Dimension(500, 359));
+            ventanaRecuperar3.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al recuperar la contraseña!");
+            respuestaUser.setText("");
+            ventanaRecuperar2.setVisible(false);
+        }
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+        int xCi = Integer.parseInt(txtCI.getText());
+        if (esAdminSistema(xCi)) {
+            PersonaDTO xPersona = PersonaServicio.getPersonaByUserId(xCi);
+            if (xPersona != null) {
+                try {
+                    if (xPersona.Password.equals(Hashing.DoHash(txtContraseña.getText()))) {
+                        JOptionPane.showMessageDialog(null, "Logeado correctamente!");
+                        this.setVisible(false);
+                        new Gestion().setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error al logear!");
+                        txtCI.setText("");
+                        txtContraseña.setText("");
+                    }
+                } catch (Error e) {
+                    System.out.println(e);
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al logear!");
+                txtCI.setText("");
+                txtContraseña.setText("");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Error al logear! Usted no es administrador");
+            txtCI.setText("");
+            txtContraseña.setText("");
+        }
+    }//GEN-LAST:event_jButton4ActionPerformed
+
+    private boolean esAdminSistema(int pCi){
+        for(int x : sAdministradores){
+            if(pCi == x){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+>>>>>>> Stashed changes
     /**
      * @param args the command line arguments
      */
@@ -169,6 +331,14 @@ public class Login extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnIngresar;
+<<<<<<< Updated upstream
+=======
+    private javax.swing.JTextField ciUser;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+>>>>>>> Stashed changes
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
