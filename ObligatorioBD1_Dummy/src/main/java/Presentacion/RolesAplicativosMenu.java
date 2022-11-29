@@ -23,18 +23,18 @@ import javax.swing.table.DefaultTableModel;
 public class RolesAplicativosMenu extends javax.swing.JFrame {
     public  AplicativoDTO[] Aplicativos;
     public  String AppNombre;
+    public int UserIdLogueado;
     static DefaultTableModel modeloRolesAplicativos;
-    public int CiUserLogueado;
     /**
      * Creates new form RolesAplicativosMenu
      * @param appNombre
      * @param aplicativos
      */
-    public RolesAplicativosMenu(String appNombre, AplicativoDTO[] aplicativos,int ciuserLogueado) {
+    public RolesAplicativosMenu(String appNombre, AplicativoDTO[] aplicativos,int userIdLogueado) {
         initComponents();
         this.AppNombre = appNombre;
         this.Aplicativos = aplicativos;
-        this.CiUserLogueado= ciuserLogueado;
+        this.UserIdLogueado = userIdLogueado;
         setearModeloTablaRolesAplicativos();
     }
 
@@ -119,7 +119,7 @@ public class RolesAplicativosMenu extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void BackBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackBotonActionPerformed
-        new AplicativosMenu(this.CiUserLogueado).setVisible(true);
+        new AplicativosMenu(this.UserIdLogueado).setVisible(true);
     }//GEN-LAST:event_BackBotonActionPerformed
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
@@ -165,7 +165,7 @@ public class RolesAplicativosMenu extends javax.swing.JFrame {
 
         nombreAplicacion.setText(this.AppNombre);
         int idApp = this.getAplicativoIdByName(this.AppNombre);
-        int rolNegId= PermisoServicio.getRolNegIdByIds(123, idApp);
+        int rolNegId= PermisoServicio.getRolNegIdByIds(this.UserIdLogueado, idApp);
         
         RolNegocioAplicativoDTO[] rolesNeg = RolNegocioAplicativoServicio.getRolesNegocioAplicativoByIds(rolNegId, idApp); //id user y id app
         //RolAplicativoDTO []  roles = new RolAplicativoDTO[rolesNeg.length];
