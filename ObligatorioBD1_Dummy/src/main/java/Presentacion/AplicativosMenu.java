@@ -100,6 +100,7 @@ public class AplicativosMenu extends javax.swing.JFrame {
 
     private void IrBotonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_IrBotonActionPerformed
         this.appNombre = tablaAplicativos.getValueAt(tablaAplicativos.getSelectedRow(), 0).toString();
+        this.setVisible(false);
         new RolesAplicativosMenu(this.appNombre, this.aplicativos,this.ciUserLogueado).setVisible(true);
 
 
